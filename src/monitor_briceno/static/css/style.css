@@ -1,0 +1,203 @@
+body{
+    background-color: #fff;
+}
+
+#projects_title report-title{
+    font-family: 'Open Sans', sans-serif;
+}
+
+#report-title{
+    font-family: 'Open Sans', sans-serif;
+}
+
+#no_projects{
+    font-family: 'Baloo Bhaijaan',sans-serif;
+}
+
+#project_each{
+    font-family: 'Open Sans', sans-serif;
+    border-color: #080d15;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#status_box{
+    font-weight:bold;
+}
+
+#colorstrip{
+    height: 0px;
+    border-bottom:solid 10vh white;
+}
+
+#idx_title{
+    line-height: 9vh;
+}
+
+#colorstrip h1 {
+    font-size: 3em;
+    vertical-align: middle;
+    font-weight: bold;
+    border-color:#202B00;
+}
+
+/* navbar */
+.navbar-default {
+    border-color: #FFFFF;
+    margin-bottom: 0;
+    margin-top: 0;
+    background-color: #202B00;
+        color: black;
+}
+
+.navbar{
+    border-radius: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.navbar-default .navbar-brand{
+    font-family: 'Satisfy', cursive;
+    color: #fff;
+}
+
+.nav.navbar-nav li a{
+    color: #fff;
+}
+
+.nav.navbar-nav.navbar-right li a{
+    color: #fff;
+}
+
+.nav.navbar-text.navbar-right{
+    color: #fff;
+}
+
+.navbar-text.navbar-center{
+    color: #fff;
+}
+
+#project_each.True .thumbnail{
+    pointer-events: none;
+    opacity: 0.7;
+    border-color: #080d15;
+}
+
+.navbar-center
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+}
+
+.navbar-text .navbar-center{
+    color: #080d15;
+}
+
+/********************************/
+/*       Fade Bs-carousel       */
+/********************************/
+.fade-carousel {
+    position: relative;
+    height: 80vh;
+}
+.fade-carousel .carousel-inner .item {
+    height: 83vh;
+}
+.fade-carousel .carousel-indicators > li {
+    margin: 0 0;
+    background-color: #f39c12;
+    border-color: #080d15;
+    opacity: .2;
+}
+.fade-carousel .carousel-indicators > li.active {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
+}
+
+/********************************/
+/*          Hero Headers        */
+/********************************/
+.hero {
+/*    background: #A1A7AE;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+      -webkit-transform: translate3d(-50%,-50%,0);
+         -moz-transform: translate3d(-50%,-50%,0);
+          -ms-transform: translate3d(-50%,-50%,0);
+           -o-transform: translate3d(-50%,-50%,0);
+              transform: translate3d(-50%,-50%,0);
+}
+.hero h1 {
+    font-size: 4em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    border-color:#287EC7;
+}
+
+.fade-carousel .carousel-inner .item .hero {
+    opacity: 0;
+}
+
+.fade-carousel .carousel-inner .item.active .hero {
+    opacity: 1;
+}
+
+/********************************/
+/*            Overlay           */
+/********************************/
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #080d15;
+    opacity: .2;
+}
+
+/********************************/
+/*          Custom Buttons      */
+/********************************/
+.btn.btn-lg {padding: 10px 40px;}
+.btn.btn-hero,
+.btn.btn-hero:hover,
+.btn.btn-hero:focus {
+    color: #f5f5f5;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    outline: none;
+    margin: 40px auto;
+}
+
+/********************************/
+/*       Slides backgrounds     */
+/********************************/
+.fade-carousel .slides .slide-1,
+.fade-carousel .slides .slide-2,
+.fade-carousel .slides .slide-3 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.fade-carousel .slides .slide-1 {
+  background-image: url("/static/images/briceno1.jpg");
+}
+.fade-carousel .slides .slide-2 {
+  background-image: url("/static/images/briceno3.jpg");
+}
+.fade-carousel .slides .slide-3 {
+  background-image: url("/static/images/briceno2.jpg");
+}

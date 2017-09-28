@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.signals import user_logged_in
+# from django.contrib.auth.signals import user_logged_in
 from django.db import models
 
 
@@ -80,31 +80,4 @@ class UserProfile(AbstractUser, PermissionsMixin):
 def login_user(sender, request, userprofile, **kwargs):
     userprofile.login_count = userprofile.login_count + 1
     userprofile.save()
-# user_logged_in.connect(login_user)
-
-
-# # Profile class
-# class Profile(models.Model):
-#     """Extension of user model to profile to extract require fields"""
-#
-#     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='profile')
-#     position = models.CharField(max_length=50, verbose_name="Cargo")
-#     phone = models.CharField(max_length=10, verbose_name="Teléfono")
-#     organization = models.CharField(max_length=50, verbose_name="Nombre de la organización")
-#     address = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dirección (en territorio)")
-#     added = models.DateTimeField(auto_now_add=True)
-#     last_activity = models.DateTimeField(blank=True, null=True)
-#     login_count = models.IntegerField(default=0)
-#
-#     class Meta:
-#         verbose_name = "Perfil"
-#         verbose_name_plural = "Perfiles"
-#
-#     def __str__(self):
-#         return 'Usuario: ' + self.user.username + '; organización: ' + self.organization
-#
-#
-# def login_user(sender, request, user, **kwargs):
-#     user.profile.login_count = user.profile.login_count + 1
-#     user.profile.save()
 # user_logged_in.connect(login_user)
