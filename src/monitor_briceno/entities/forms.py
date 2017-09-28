@@ -17,3 +17,16 @@ class UserProfileForm(UserCreationForm):
         model = UserProfile
         fields = ('email', 'password1', 'password2', 'first_name', 'last_name',
                   'position', 'phone', 'organization', 'address')
+
+
+class UserProfileFormUpdate(forms.ModelForm):
+    """Form used when an existing user is to be edited"""
+    class Meta:
+        model = UserProfile
+        fields = ('email', 'first_name', 'last_name', 'position',
+                  'phone', 'organization', 'address')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['organization'].widget.attrs['readonly'] = True

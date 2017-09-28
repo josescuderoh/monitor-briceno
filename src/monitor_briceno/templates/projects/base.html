@@ -70,7 +70,7 @@
                 </ul>
                 <p class="nav navbar-text navbar-right">
                     {% if user.is_authenticated %}
-                    Bienvenido, <a href="#">{{ user.get_short_name }}</a>&nbsp;
+                    Bienvenido, <a href="{% url 'entities:profile-update' user.id%}">{{ user.get_short_name }}</a>&nbsp;
                     {% else %}
                     Bienvenido, Invitado&nbsp;
                     {% endif %}

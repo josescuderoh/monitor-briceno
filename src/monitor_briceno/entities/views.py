@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from .forms import UserProfileForm
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from .forms import UserProfileForm, UserProfileFormUpdate
+from .models import UserProfile
 
 
 # User views
@@ -53,3 +56,29 @@ def register(request):
 #         return HttpResponseRedirect('/projects')
 #     else:
 #         return HttpResponse('El link de activación es inválido.')
+
+
+@login_required
+def edit_user(request, pk):
+
+    updated = False
+
+    user = UserProfile.objects.get(pk=pk)
+    user_form = UserProfileFormUpdate(instance=user)
+
+    if request.user.is_authenticated() and request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserProfileFormUpdate(request.POST, request.FILES, instance=user)
+
+            if user_form.is_valid():
+                created_user = user_form.save()
+                created_user.save()
+                updated = True
+
+        return render(request, "entities/profile_form.html", {
+            "noodle": pk,
+            "user_form": user_form,
+            "updated": updated,
+        })
+    else:
+        raise PermissionDenied
