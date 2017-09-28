@@ -58,11 +58,11 @@
                     {% endif %}
                     <li class="">
                         {% if user.is_authenticated %}
-                        <a href="#">
+                        <a href="{% url 'entities:logout' %}">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Salir
                         </a>
                         {% else %}
-                        <a href="#">
+                        <a href="{% url 'entities:login' %}">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Ingresar
                         </a>
                         {% endif %}
@@ -70,7 +70,7 @@
                 </ul>
                 <p class="nav navbar-text navbar-right">
                     {% if user.is_authenticated %}
-                    Bienvenido, <a href="#">{{ user.first_name }}</a>&nbsp;
+                    Bienvenido, <a href="#">{{ user.get_short_name }}</a>&nbsp;
                     {% else %}
                     Bienvenido, Invitado&nbsp;
                     {% endif %}

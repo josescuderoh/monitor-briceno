@@ -38,7 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'entities',
-    'projects'
+    'projects',
+    'django.contrib.gis',
+    'leaflet',
+    'bootstrap3',
+    'dynamic_formsets',
+    'django_bootstrap_dynamic_formsets',
+    'djcelery',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

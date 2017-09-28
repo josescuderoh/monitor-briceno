@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from . import views
+# from . import views
 from django.contrib.auth import views as auth_views
-# from .forms import LoginForm
+from .forms import LoginForm
 
 app_name = 'entities'
 
@@ -13,9 +13,9 @@ urlpatterns = [
     #     views.activate, name='activate'),
     # # Edit profile url
     # url(r'^profile/(?P<pk>[0-9]+)/$', views.edit_user, name='profile-update'),
-    # # Login url
-    # url(r'^login/$', auth_views.login, {'template_name': 'registration/login.html',
-    #                                     'authentication_form': LoginForm}, name='login'),
-    # # Logout url
-    # url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    # Login url
+    url(r'^login/$', auth_views.login, {'template_name': 'entities/login.html',
+                                        'authentication_form': LoginForm}, name='login'),
+    # Logout url
+    url(r'^logout/$', auth_views.logout, {'next_page': '/projects/'}, name='logout'),
 ]
