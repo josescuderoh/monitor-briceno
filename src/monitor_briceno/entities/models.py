@@ -41,9 +41,9 @@ class UserProfile(AbstractUser, PermissionsMixin):
     """User model."""
 
     email = models.EmailField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
     username = None
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, verbose_name="Nombres")
+    last_name = models.CharField(max_length=255, verbose_name="Apellidos")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
