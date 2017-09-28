@@ -42,6 +42,7 @@ class UserProfile(AbstractUser, PermissionsMixin):
 
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
+    username = None
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -79,7 +80,7 @@ class UserProfile(AbstractUser, PermissionsMixin):
 def login_user(sender, request, userprofile, **kwargs):
     userprofile.login_count = userprofile.login_count + 1
     userprofile.save()
-user_logged_in.connect(login_user)
+# user_logged_in.connect(login_user)
 
 
 # # Profile class
