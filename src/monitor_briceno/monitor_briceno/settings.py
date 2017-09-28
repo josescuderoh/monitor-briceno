@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'monitor_briceno.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'monitor_briceno',
+        'USER': 'fipmaster',
+        'PASSWORD': 'viejopapo08*',
+        'HOST': 'fip-psql-instance.cxrb2g5bwzb0.us-east-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -105,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ES'
 
 TIME_ZONE = 'UTC'
 
@@ -120,3 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Define user models
+AUTH_USER_MODEL = 'entities.UserProfile'
