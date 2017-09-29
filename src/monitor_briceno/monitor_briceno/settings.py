@@ -141,3 +141,37 @@ AUTH_USER_MODEL = 'entities.UserProfile'
 
 # Redirect after authentication
 LOGIN_REDIRECT_URL = '/projects/'
+
+# Settings for email confirmation and notifications
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'noreply@ideaspaz.org'
+EMAIL_HOST_PASSWORD = 'viejopapo08*'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = "Monitor Briceño <noreply@ideaspaz.org>"
+
+# #Time for new login
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Celery settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ALWAYS_EAGER = False
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+# Config for leaflet
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (7.113343, -75.554834),
+    'DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'RESET_VIEW': False
+}

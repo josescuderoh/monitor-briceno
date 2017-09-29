@@ -1,11 +1,17 @@
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_text
+from django.contrib.auth import login
+from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .forms import UserProfileForm, UserProfileFormUpdate
 from .models import UserProfile
+from .tasks import send_verification_email
+from .tokens import account_activation_token
 
 
-# User views
 def register(request):
     """This view is used to render the registration form and create the new user in the database."""
 
@@ -28,9 +34,9 @@ def register(request):
             user.save()
             registered = True
 
-            # # Send verification email
-            # site_domain = get_current_site(request).domain
-            # send_verification_email.delay(user.pk, site_domain)
+            # Send verification email
+            site_domain = get_current_site(request).domain
+            send_verification_email.delay(user.pk, site_domain)
 
         else:
             print(user_form.errors)
@@ -43,23 +49,26 @@ def register(request):
                    'registered': registered})
 
 
-# def activate(request, uidb64, token):
-#     try:
-#         uid = force_text(urlsafe_base64_decode(uidb64))
-#         user = User.objects.get(pk=uid)
-#     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-#         user = None
-#     if user is not None and account_activation_token.check_token(user, token):
-#         user.is_active = True
-#         user.save()
-#         login(request, user)
-#         return HttpResponseRedirect('/projects')
-#     else:
-#         return HttpResponse('El link de activación es inválido.')
+def activate(request, uidb64, token):
+    """This view is in charge of activation of the user once the email confirmation has
+    been carried out."""
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = UserProfile.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, UserProfile.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return HttpResponseRedirect('/projects/')
+    else:
+        return HttpResponse('El link de activación es inválido.')
 
 
 @login_required
 def edit_user(request, pk):
+    """View used to edit the user information (only some variables are editable)"""
 
     updated = False
 
