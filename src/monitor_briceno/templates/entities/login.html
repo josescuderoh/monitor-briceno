@@ -10,14 +10,14 @@
 <br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-8 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>Ingrese sus credenciales</h3>
                     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                         <div class="form-group col-sm-10">
                             {% bootstrap_form form size="small" layout="horizontal"%}
-                            <a href="#">¿Olvidó su contraseña?</a>
+                            <a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10" align="center">
