@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from entities.models import UserProfile
 from collections import defaultdict, Counter
+from datetime import date
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate
 
@@ -42,16 +43,16 @@ class ProjectsView(LastAccessMixin, generic.ListView):
             raise Http404
         else:
             if self.request.user.is_superuser:
-                projects_pk = [project.pk for project in Project.objects.filter()]
+                projects_pk = [project.pk for project in Project.objects.filter().order_by('added')]
                 for project_pk in projects_pk:
-                    temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk)]
+                    temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk).order_by()]
                     if set(temp_tasks) == set(['TE']) and not Project.objects.get(id=project_pk).closed:
                         updated = Project.objects.get(id=project_pk)
                         updated.closed = True
                         updated.save()
                 return Project.objects.all()
             else:
-                projects_pk = [project.pk for project in Project.objects.filter(created_by=self.request.user)]
+                projects_pk = [project.pk for project in Project.objects.filter(created_by=self.request.user).order_by('added')]
                 for project_pk in projects_pk:
                     temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk)]
                     if set(temp_tasks) == set(['TE']) and not Project.objects.get(id=project_pk).closed:
@@ -65,6 +66,26 @@ class DetailView(generic.DetailView):
     """Detail view of projects."""
     model = Project
     template_name = 'projects/detail.html'
+
+    def get_context_data(self, **kwargs):
+        self.object = self.get_object()
+        # Assign values
+        context = super().get_context_data(**kwargs)
+        # Calculate days
+        start = self.object.start_date
+        end = self.object.end_date
+        today = date.today()
+        # Get difference
+        final_delta = end - start
+        current_delta = today - start
+        # Check delta time
+        if final_delta >= current_delta:
+            context['final_delta'] = final_delta
+            context['current_delta'] = current_delta
+        else:
+            context['final_delta'] = final_delta
+            context['current_delta'] = final_delta
+        return context
 
 
 class ProjectCreate(generic.CreateView):

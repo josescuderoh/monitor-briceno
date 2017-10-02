@@ -14,14 +14,14 @@
             <h2>Listado de proyectos de la organización </h2>
             {% endif %}
         </div>
+        <div class="list-group">
             {% for project in all_projects %}
                 <div class="col-sm-6 col-md-4 {{ project.closed }}" id="project_each">
-                    <div class="thumbnail">
+                    <div class="thumbnail list-group-item {% if project.closed %}disabled{% endif %}">
                         <div class="caption">
                             <div class="row">
                                 <div class="col-sm-9">
                                     <h3>Nombre: <a href="{% url 'projects:detail' project.id %}">{{ project.name }}</a></h3>
-                                    <!-- <h3>Nombre: {{ project.name }}</h3> -->
                                 </div>
                                 <div class="col-sm-3 vcenter" align="center" id="status_box">
                                     {% if project.status == 2 or project.closed%}
@@ -36,7 +36,6 @@
                             {% if request.user.is_superuser %}
                             <h4>Creado por: {{ project.created_by.profile.organization }}</h4>
                             {% endif %}
-                            <h5>Objetivo principal: {{ project.main_goal }}</h5>
                             {% language 'es' %}
                             <h5 class="date">Fecha de inicio: {{ project.start_date|date:'D, d N' }}</h5>
                             <h5 class="date">Fecha de finalización: {{ project.end_date|date:'D, d N' }}</h5>
@@ -56,6 +55,7 @@
                 </div>
                 {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
             {% endfor %}
+        </div>
     </div>
 </div>
 {% else %}

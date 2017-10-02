@@ -3,19 +3,19 @@ body{
 }
 
 #projects_title report-title{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Encode Sans Expanded', sans-serif;
 }
 
 #report-title{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Encode Sans Expanded', sans-serif;
 }
 
 #no_projects{
-    font-family: 'Baloo Bhaijaan',sans-serif;
+    font-family: 'Encode Sans Expanded', sans-serif;
 }
 
 #project_each{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Encode Sans Expanded', sans-serif;
     border-color: #080d15;
 }
 
@@ -38,16 +38,18 @@ body{
     line-height: 9vh;
 }
 
-#colorstrip h1 {
-    font-size: 3em;
-    vertical-align: middle;
-    font-weight: bold;
-    border-color:#202B00;
+/*Projects*/
+
+#project_each.True .thumbnail {
+    pointer-events: none;
 }
 
+
+
 /* navbar */
+
 .navbar-default {
-    border-color: #FFFFF;
+    border-color: #FFF;
     margin-bottom: 0;
     margin-top: 0;
     /*background-color: #618400;*/
@@ -81,11 +83,7 @@ body{
     color: #fff;
 }
 
-#project_each.True .thumbnail{
-    pointer-events: none;
-    opacity: 0.7;
-    border-color: #080d15;
-}
+/*Footer*/
 
 .navbar-center
 {
@@ -155,11 +153,16 @@ body{
               transform: translate3d(-50%,-50%,0);
 }
 .hero h1 {
+    font-family: 'Encode Sans Expanded', sans-serif;
     font-size: 4em;
     font-weight: bold;
     margin: 0;
     padding: 0;
     border-color:#287EC7;
+}
+
+.hero h3 {
+    font-family: 'Encode Sans Expanded', sans-serif;
 }
 
 .fade-carousel .carousel-inner .item .hero {

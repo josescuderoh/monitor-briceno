@@ -65,7 +65,6 @@ class Project(models.Model):
         ("Tesorería de Rentas", "Tesorería de Rentas"),
         ("Secretaría de Planeación y Obras Municipales", "Secretaría de Planeación y Obras Municipales"),
         ("Secretaría para la Educación para la Cultura y el Desarrollo", "Secretaría para la Educación para la Cultura y el Desarrollo"))
-
     representative = models.CharField(verbose_name="Interlocutor", max_length=200, choices=MUN_CHOICES)
     # Linea del plan a la cual impactan
     PD_CHOICES = (
@@ -116,7 +115,7 @@ class ProjectTask(models.Model):
     # Tarea
     task = models.CharField(verbose_name="Tarea", max_length=50)
     # Nivel de ejecición
-    LEVELS = (('PI', 'Por iniciar'), ('EC', 'En curso'), ('TE', 'Terminada'))
+    LEVELS = (('Por iniciar', 'Por iniciar'), ('En curso', 'En curso'), ('Terminada', 'Terminada'))
     completion = models.CharField(verbose_name="Estado",
                                   choices=LEVELS, default=False, max_length=20)
     # Observaciones

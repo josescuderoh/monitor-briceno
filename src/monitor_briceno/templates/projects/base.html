@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Satisfy|Baloo+Bhaijaan|Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -35,8 +36,8 @@
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp; Mapa
                         </a>
                     </li>
-                    <li class="">
-                        <a href="#">
+                    <li class="{% if request.resolver_match.url_name == 'report' %}active{% else %}#{% endif %}">
+                        <a href="{% url 'projects:report' %}">
                             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp; Reporte
                         </a>
                     </li>

@@ -1,9 +1,210 @@
 {% extends 'projects/base.html' %}
 {% block title %}Details{% endblock %}
+{% load static %}
+{% block extrahead %}
+
+<style>
+
+.items-list {
+    list-style-type: none;
+}
+
+.items-list-item{
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
+
+
+.no-beneficiary{
+    font-size: 50px;
+}
+
+.investment{
+    font-size: 50px;
+}
+
+div.gridcontainer
+{
+    line-height: 0;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+div.griditem
+{
+    display: inline-block;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: : 1px solid #CCCCCC;
+    border-radius: 0px;
+    padding: 7px;
+}
+
+
+#page{
+    border: 1px solid #CCCCCC;
+}
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="{% static 'src/font-awesome/css/font-awesome.min.css' %}"/>
+<script type="text/javascript" src="{% static 'src/fusioncharts/js/fusioncharts.js' %}"></script>
+<script type="text/javascript" src="{% static 'src/fusioncharts/js/themes/fusioncharts.theme.fint.js' %}"></script>
+
+
+<script>
+FusionCharts.ready(function () {
+    var topStores = new FusionCharts({
+        type: 'bar2d',
+        renderAt: 'chart-container',
+        width: '100%',
+        height: '100',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "yAxisName": "",
+                "numberSuffix": " días",
+                "paletteColors": "#0075c2",
+                "bgColor": "#ffffff",
+                "showBorder": "0",
+                "labelFontSize": "15",
+                "labelFont": "sans-serif",
+                "showCanvasBorder": "0",
+                "bgColor": "#9D9D9D",
+                "usePlotGradientColor": "0",
+                "plotBorderAlpha": "10",
+                "placeValuesInside": "1",
+                "valueFontColor": "#ffffff",
+                "showAxisLines": "0",
+                "axisLineAlpha": "25",
+                "divLineAlpha": "10",
+                "alignCaptionWithCanvas": "0",
+                "showAlternateVGridColor": "0",
+                "captionFontSize": "14",
+                "subcaptionFontSize": "14",
+                "subcaptionFontBold": "0",
+                "toolTipColor": "#ffffff",
+                "toolTipBorderThickness": "0",
+                "toolTipBgColor": "#000000",
+                "toolTipBgAlpha": "80",
+                "toolTipBorderRadius": "2",
+                "toolTipPadding": "5",
+                "yAxisMinValue": "0",
+                "yAxisMaxValue": "{{final_delta}}",
+                "paletteColors": "#618400",
+            },
+
+            "data": [
+                {
+                    "label": "",
+                    "value": "{{current_delta}}"
+                },
+            ]
+        }
+    })
+    .render();
+});
+</script>
+
+{% endblock %}
 
 {% block body %}
 
-<h1>{{ project.name }}</h1>
-<h1>{{ project.beneficiary }}</h1>
+<!-- Page Content -->
+<br>
+<div class="container" id="page">
+
+    <div class="row">
+        <div class="col-lg-12 gridcontainer">
+            <div class="col-lg-12 griditem"><h2><strong>Nombre del projecto:</strong><br>{{project.name}}</h2></div>
+            <div class="col-lg-12 griditem"><h2><strong>Creado por: </strong>{{project.created_by.organization}}</h2></div>
+            <div class="col-lg-12 griditem"><h4> <strong>Objetivo principal:</strong><br> {{project.main_goal}}</h4></div>
+            <div class="col-lg-6 griditem"><h4><strong>Interlocutor:</strong><br> {{project.representative}}</h4></div>
+            <div class="col-lg-6 griditem"><h4><strong>Línea del plan de desarrollo que impacta:</strong><br> {{project.lines_pd}}</h4></div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="col-lg-12 items-list">
+                <li class="col-lg-4 items-list-item">
+                    Tipo de beneficiarios<br>
+                    {% if project.beneficiary == "Individuos" %}
+                    <i class="fa fa-users fa-4x" aria-hidden="true"></i><br>
+                    {% elif project.beneficiary == "Familias" %}
+                    <i class="fa fa-user fa-4x" aria-hidden="true"></i><br>
+                    {% else %}
+                    <i class="fa fa-university fa-4x" aria-hidden="true"></i>
+                    {% endif %}
+                </li>
+                <li class="col-lg-4 items-list-item">
+                    Cantidad de beneficiarios
+                    <p class="no-beneficiary" aria-hidden="true">{{ project.no_benef }}</p>
+                </li>
+                <li class="col-lg-4 items-list-item">
+                    Inversión
+                    <p class="investment" aria-hidden="true">{{ project.budget }}</p>
+                </li>
+            </ul>
+            <div class="col-lg-12">
+                <h4>Acerca de los beneficiarios:</h4>
+                {% if project.beneficiary_comments  %}
+                <p>{{project.beneficiary_comments}}</p>
+                {% else %}
+                <p>Aún no hay comentarios registrados.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="border-radius: 5px;">
+        <div class="col-lg-12">
+            <h4><strong>Cronograma general</strong></h4>
+            <div id="chart-container"></div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+          <div class="container col-lg-12">
+            <h4><strong>Actividades programadas</strong></h4>
+            <div class="panel-group" id="accordion">
+                {% for task_element in project.tasks.all %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> <strong>Actividad</strong>: {{task_element.task}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <strong>Observaciones</strong>:{% if task_element.comments %} {{task_element.comments}} {% endif %} <br>
+                            <strong>Estado</strong>: {{task_element.completion}}<br>
+                            <strong>Fecha de creación</strong>: {{task_element.added}}<br>
+                            <strong>Última actualización</strong>: {{task_element.updated}}<br>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+          <h4><strong>Fotos y videos</strong></h4>
+          <div class="list-group">
+              <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
+              <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
+              <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
+              <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
+              <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
+          </div>
+      </div>
+    </div>
+
+ </div>
 
 {% endblock %}
