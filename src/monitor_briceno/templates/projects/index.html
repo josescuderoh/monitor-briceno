@@ -5,28 +5,17 @@
 {% block extrahead %}
 
 <style>
-
+    body {
+        height: 100vh;
+        width: 100%
+    }
 </style>
 
 {% endblock %}
 
 {% block body %}
 
-<div id="colorstrip">
-    <div class="col-sm-2" align="center">
-        <img src="/static/images/escudo.svg" width="100" height="100">
-    </div>
-    <div class="col-sm-8" id="idx_title" align="center">
-        <h1 class="vcenter">Bienvenido a Briceño</h1>
-    </div>
-    <div class="col-sm-2" align="center">
-        <img src="/static/images/logo.svg" width="100" height="100">
-    </div>
-</div>
-
 <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="10000" id="bs-carousel">
-<!-- Overlay -->
-  <div class="overlay"></div>
 
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -39,9 +28,9 @@
   <div class="carousel-inner">
     <div class="item slides active">
       <div class="slide-1"></div>
-        <!-- <img src="/static/images/briceno1.jpg" class="image-responsive"> -->
       <div class="hero">
           <hgroup>
+              <h1>Bienvenido a Briceño</h1>
               <h3>Esta es la página principal de Plataforma de Articulación de la Oferta Institucional de Cooperación del municipio de Briceño.
                   Esta herramienta ha sido creada para hacer un seguimiento a los proyectos y actividades que se llevan a cabo en
                   las diferentes veredas del municipio, y consiste en una herramienta para monitorear el estado

@@ -1,0 +1,197 @@
+{% extends 'projects/base.html' %}
+{% block title %}Mapas{% endblock %}
+
+
+{% block extrahead %}
+
+{% load static %}
+{% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
+
+<style type="text/css">
+
+    .leaflet-container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+     html, body {
+         height: 100%;
+         width: 100%;
+     }
+
+    .container {
+        height: 95%;
+        width: 100%;
+        padding: 0;
+    }
+
+    .circleBase {
+        border-radius: 50%;
+        position: absolute;
+        top: 70px;
+        right: 70px;
+        z-index:500;
+        text-align: center;
+        display: table;
+        opacity: 1;
+    }
+
+    .type1 {
+        width: 120px;
+        height: 120px;
+        background: #fff;
+        border: 3px solid #003300;
+    }
+
+    h4 {
+        display: table-cell;
+        vertical-align: middle;
+        text-align:center;
+        opacity: 1;
+    }
+
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}"/>
+<script type="text/javascript" src="{% static 'src/leaflet.ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
+<script type="text/javascript">
+
+
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
+function out_layers(map,options){
+    // Base layers
+    var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+    });
+    var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}{y}{x}.png", {
+        maxZoom: 17,
+    });
+
+    // Get maxoimum numbre of projects
+    var max_num_proj = 0;
+    var max_investment = 0;
+    // load GeoJSON from an external file
+    // $.ajaxSetup( { "async": false } );
+    $.getJSON("/veredas_data/",function(data){
+        // add GeoJSON layer to the map once the file is loaded
+        $.each(data.features, function(idx){
+            curr_num = data.features[idx].num_proj
+            curr_bud = data.features[idx].investment
+            if (curr_num > max_num_proj) {
+                max_num_proj = curr_num;
+            };
+            if (curr_bud > max_investment) {
+                max_investment = curr_bud;
+            };
+        })
+    });
+
+    //Veredas
+    $.ajaxSetup( { "async": false } );
+    var veredas = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
+        onEachFeature: function(feature, layer){
+            //Append required text
+            var popupMsj = 'Vereda: ' + feature.properties.nombre_ver.toString();
+            layer.bindTooltip(popupMsj);
+        },
+        style: function(feature){
+            return {color: "#003300", weight: 2, fillColor:"#fff", fillOpacity:.3 };
+        }
+    });
+
+    //Add default shape
+    veredas.addTo(map)
+
+    //Cantidad de proyectos
+    var cantidad_proyectos = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
+
+        onEachFeature: function(feature, layer){
+            //Append required text
+            var popupMsj = 'No. de proyectos: ' + feature.num_proj.toString() +'<br>' +
+                            'Vereda: ' + feature.properties.nombre_ver.toString() +'<br>' +
+                            'Instituciones: ' + feature.entities.join(',<br>')
+            layer.bindPopup(popupMsj);
+        },
+
+        style: function(feature){
+            var projs = feature.num_proj;
+            //Assign colors
+            if ( projs == max_num_proj ) fillColor = "#006837";
+            else if ( projs > Math.round(0.66*max_num_proj) ) fillColor = "#31a354";
+            else if ( projs > Math.round(0.33*max_num_proj) ) fillColor = "#ffffcc";
+            else if ( projs > 0 ) fillColor = "#ffffcc";
+            else fillColor = "#fff";  // no data
+
+            return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
+        }
+    });
+
+    //Inversión
+    var investment_ver = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
+        onEachFeature: function(feature, layer){
+            //Append required text
+            if (feature.investment) {
+                var popupMsj = 'Inversión: $' + numberWithCommas(feature.investment) +
+                '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
+                layer.bindPopup(popupMsj);
+            } else {
+                var popupMsj = 'Inversión: No hay inversión reportada.' +
+                '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
+                layer.bindPopup(popupMsj);
+            }
+        },
+
+        style: function(feature){
+            var inv = feature.investment;
+            //Assign colors
+            if ( inv == max_investment ) fillColor = "#006837";
+            else if ( inv > Math.round(0.66*max_investment) ) fillColor = "#31a354";
+            else if ( inv > Math.round(0.33*max_investment) ) fillColor = "#ffffcc";
+            else if ( inv > 0 ) fillColor = "#ffffcc";
+            else fillColor = "#fff";  // no data
+            return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
+        }
+    });
+
+    var baseLayers = {
+        "Mapa base": osm,
+        "Topografía": OpenTopoMap,
+    };
+
+    var groupedOverlays = {
+        "Capas": {
+            "Inversión": investment_ver,
+            "Cantidad de proyectos": cantidad_proyectos,
+            "Veredas": veredas,
+        }
+    };
+
+    L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+};
+
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="circleBase type1">
+    <h4>Capas disponibles</h4>
+</div>
+
+<div class="container" id="#mymap">
+    {% leaflet_map "gis" callback="window.out_layers" %}
+</div>
+
+{% endblock %}

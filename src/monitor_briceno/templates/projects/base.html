@@ -24,14 +24,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="{% url 'projects:home' %}">Briceño</a>
+                <a class="{% if request.resolver_match.url_name == 'home' %}navbar-brand active{% else %}navbar-brand{% endif %}" href="{% url 'projects:home' %}">Briceño</a>
             </div>
 
             <!--items-->
             <div class="collapse navbar-collapse" id="topNavBar">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="#">
+                    <li class="{% if request.resolver_match.url_name == 'maps' %}active{% else %}#{% endif %}">
+                        <a href="{% url 'projects:maps' %}">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp; Mapa
                         </a>
                     </li>
@@ -41,8 +41,8 @@
                         </a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="">
-                        <a href="#">
+                    <li class="{% if request.resolver_match.url_name == 'projects-list' %}active{% else %}#{% endif %}">
+                        <a href="{% url 'projects:projects-list' %}">
                             <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; Proyectos
                         </a>
                     </li>
@@ -50,8 +50,8 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-                    <li class="">
-                        <a href="#">
+                    <li class="{% if request.resolver_match.url_name == 'project-add' %}active{% else %}#{% endif %}">
+                        <a href="{% url 'projects:project-add' %}">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Agregar un Proyecto
                         </a>
                     </li>
@@ -86,11 +86,18 @@
 
 <div class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
-        <div class="">
+        <div class="row">
             <div class="navbar-text navbar-center">
-                <p>Copyright &copy; Fundación Ideas para la Paz 2017</p>
+                <div class="row">
+                    <p>Copyright &copy; Fundación Ideas para la Paz 2017</p>
+                </div>
+                <div class="row">
+                    <img src="/static/images/escudo.svg" width="50" height="50">
+                    <img src="/static/images/logo.svg" width="50" height="50">
+                </div>
             </div>
         </div>
+        <br>
     </div>
 </div>
 
