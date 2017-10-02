@@ -25,6 +25,7 @@
     .container {
         height: 95%;
         width: 100%;
+        z-index: 50;
         padding: 0;
     }
 
@@ -33,7 +34,7 @@
         position: absolute;
         top: 70px;
         right: 70px;
-        z-index:500;
+        z-index:60;
         text-align: center;
         display: table;
         opacity: 1;
@@ -53,6 +54,23 @@
         opacity: 1;
     }
 
+    .leaflet-pane {
+        z-index: 20;
+    }
+
+    #loading {
+        display: block;
+        position: absolute;
+        top: 5vh;
+        left: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 90vh;
+        background-color: rgba(192, 192, 192, 0.5);
+        background-image: url("/static/images/ajax-loader2.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 
 </style>
 
@@ -60,7 +78,6 @@
 <script type="text/javascript" src="{% static 'src/leaflet.ajax.js' %}"></script>
 <script type="text/javascript" src="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
 <script type="text/javascript">
-
 
 function numberWithCommas(x) {
     var parts = x.toString().split(".");
@@ -85,6 +102,7 @@ function out_layers(map,options){
     var cantidad_proyectos;
     var investment_ver;
 
+    $('#loading').show();
     function data_ajax(){
         return $.ajax({
             type: "GET",
@@ -167,7 +185,7 @@ function out_layers(map,options){
 
 
     $.when(data_ajax()).done(function() {
-        console.log(investment_ver)
+        $('#loading').hide();
         var baseLayers = {
             "Mapa base": osm,
             "Topografía": OpenTopoMap,
@@ -190,12 +208,15 @@ function out_layers(map,options){
 
 {% block body %}
 
+<div id="loading"></div>
+
 <div class="circleBase type1">
     <h4>Capas disponibles</h4>
 </div>
 
-<div class="container" id="#mymap">
+<div class="container" id="page">
     {% leaflet_map "gis" callback="window.out_layers" %}
 </div>
+
 
 {% endblock %}
