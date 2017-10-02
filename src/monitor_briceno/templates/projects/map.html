@@ -81,103 +81,107 @@ function out_layers(map,options){
     // Get maxoimum numbre of projects
     var max_num_proj = 0;
     var max_investment = 0;
-    // load GeoJSON from an external file
-    // $.ajaxSetup( { "async": false } );
-    $.getJSON("/veredas_data/",function(data){
-        // add GeoJSON layer to the map once the file is loaded
-        $.each(data.features, function(idx){
-            curr_num = data.features[idx].num_proj
-            curr_bud = data.features[idx].investment
-            if (curr_num > max_num_proj) {
-                max_num_proj = curr_num;
-            };
-            if (curr_bud > max_investment) {
-                max_investment = curr_bud;
-            };
-        })
-    });
+    var veredas;
+    var cantidad_proyectos;
+    var investment_ver;
 
-    //Veredas
-    $.ajaxSetup( { "async": false } );
-    var veredas = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
-        onEachFeature: function(feature, layer){
-            //Append required text
-            var popupMsj = 'Vereda: ' + feature.properties.nombre_ver.toString();
-            layer.bindTooltip(popupMsj);
-        },
-        style: function(feature){
-            return {color: "#003300", weight: 2, fillColor:"#fff", fillOpacity:.3 };
-        }
-    });
+    function data_ajax(){
+        return $.ajax({
+            type: "GET",
+            url: "/projects/veredas_data/",
+            dataType: 'json',
+            success: function (response) {
 
-    //Add default shape
-    veredas.addTo(map)
+                    // add GeoJSON layer to the map once the file is loaded
+                $.each(response.features, function(idx){
+                        curr_num = response.features[idx].num_proj
+                        curr_bud = response.features[idx].investment
+                        if (curr_num > max_num_proj) {
+                            max_num_proj = curr_num;
+                        };
+                        if (curr_bud > max_investment) {
+                            max_investment = curr_bud;
+                        };
+                });
 
-    //Cantidad de proyectos
-    var cantidad_proyectos = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
+                veredas = L.geoJSON(response, {
+                    onEachFeature: function(feature, layer){
+                        //Append required text
+                        var popupMsj = 'Vereda: ' + feature.properties.nombre_ver.toString();
+                        layer.bindTooltip(popupMsj);
+                    },
+                    style: function(feature){
+                        return {color: "#003300", weight: 2, fillColor:"#fff", fillOpacity:.3 };
+                    },
+                });
+                cantidad_proyectos = L.geoJSON(response, {
 
-        onEachFeature: function(feature, layer){
-            //Append required text
-            var popupMsj = 'No. de proyectos: ' + feature.num_proj.toString() +'<br>' +
-                            'Vereda: ' + feature.properties.nombre_ver.toString() +'<br>' +
-                            'Instituciones: ' + feature.entities.join(',<br>')
-            layer.bindPopup(popupMsj);
-        },
+                    onEachFeature: function(feature, layer){
+                        //Append required text
+                        var popupMsj = 'No. de proyectos: ' + feature.num_proj.toString() +'<br>' +
+                        'Vereda: ' + feature.properties.nombre_ver.toString() +'<br>' +
+                        'Instituciones: ' + feature.entities.join(',<br>')
+                        layer.bindPopup(popupMsj);
+                    },
+                    style: function(feature){
+                        var projs = feature.num_proj;
+                        //Assign colors
+                        if ( projs == max_num_proj ) fillColor = "#006837";
+                        else if ( projs > Math.round(0.66*max_num_proj) ) fillColor = "#31a354";
+                        else if ( projs > Math.round(0.33*max_num_proj) ) fillColor = "#ffffcc";
+                        else if ( projs > 0 ) fillColor = "#ffffcc";
+                        else fillColor = "#fff";  // no data
 
-        style: function(feature){
-            var projs = feature.num_proj;
-            //Assign colors
-            if ( projs == max_num_proj ) fillColor = "#006837";
-            else if ( projs > Math.round(0.66*max_num_proj) ) fillColor = "#31a354";
-            else if ( projs > Math.round(0.33*max_num_proj) ) fillColor = "#ffffcc";
-            else if ( projs > 0 ) fillColor = "#ffffcc";
-            else fillColor = "#fff";  // no data
+                        return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
+                    }
+                });
+                investment_ver = L.geoJSON(response ,{
+                    onEachFeature: function(feature, layer){
+                        //Append required text
+                        if (feature.investment) {
+                            var popupMsj = 'Inversión: $' + numberWithCommas(feature.investment) +
+                            '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
+                            layer.bindPopup(popupMsj);
+                        } else {
+                            var popupMsj = 'Inversión: No hay inversión reportada.' +
+                            '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
+                            layer.bindPopup(popupMsj);
+                        }
+                    },
 
-            return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
-        }
-    });
-
-    //Inversión
-    var investment_ver = new L.GeoJSON.AJAX("{% url 'projects:veredas' %}",{
-        onEachFeature: function(feature, layer){
-            //Append required text
-            if (feature.investment) {
-                var popupMsj = 'Inversión: $' + numberWithCommas(feature.investment) +
-                '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
-                layer.bindPopup(popupMsj);
-            } else {
-                var popupMsj = 'Inversión: No hay inversión reportada.' +
-                '<br>' + 'Vereda: ' + feature.properties.nombre_ver.toString();
-                layer.bindPopup(popupMsj);
+                    style: function(feature){
+                        var inv = feature.investment;
+                        //Assign colors
+                        if ( inv == max_investment ) fillColor = "#006837";
+                        else if ( inv > Math.round(0.66*max_investment) ) fillColor = "#31a354";
+                        else if ( inv > Math.round(0.33*max_investment) ) fillColor = "#ffffcc";
+                        else if ( inv > 0 ) fillColor = "#ffffcc";
+                        else fillColor = "#fff";  // no data
+                        return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
+                    }
+                });
+                veredas.addTo(map);
             }
-        },
+        });
+    };
 
-        style: function(feature){
-            var inv = feature.investment;
-            //Assign colors
-            if ( inv == max_investment ) fillColor = "#006837";
-            else if ( inv > Math.round(0.66*max_investment) ) fillColor = "#31a354";
-            else if ( inv > Math.round(0.33*max_investment) ) fillColor = "#ffffcc";
-            else if ( inv > 0 ) fillColor = "#ffffcc";
-            else fillColor = "#fff";  // no data
-            return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
-        }
+
+    $.when(data_ajax()).done(function() {
+        console.log(investment_ver)
+        var baseLayers = {
+            "Mapa base": osm,
+            "Topografía": OpenTopoMap,
+        };
+        var groupedOverlays = {
+            "Capas": {
+                "Inversión": investment_ver,
+                "Cantidad de proyectos": cantidad_proyectos,
+                "Veredas": veredas,
+            }
+        };
+        L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
     });
 
-    var baseLayers = {
-        "Mapa base": osm,
-        "Topografía": OpenTopoMap,
-    };
-
-    var groupedOverlays = {
-        "Capas": {
-            "Inversión": investment_ver,
-            "Cantidad de proyectos": cantidad_proyectos,
-            "Veredas": veredas,
-        }
-    };
-
-    L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
 };
 
 </script>
