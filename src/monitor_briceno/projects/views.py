@@ -46,7 +46,7 @@ class ProjectsView(LastAccessMixin, generic.ListView):
                 projects_pk = [project.pk for project in Project.objects.filter().order_by('added')]
                 for project_pk in projects_pk:
                     temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk).order_by()]
-                    if set(temp_tasks) == set(['TE']) and not Project.objects.get(id=project_pk).closed:
+                    if set(temp_tasks) == set(['Terminada']) and not Project.objects.get(id=project_pk).closed:
                         updated = Project.objects.get(id=project_pk)
                         updated.closed = True
                         updated.save()

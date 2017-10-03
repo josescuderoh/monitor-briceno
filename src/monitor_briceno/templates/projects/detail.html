@@ -5,6 +5,10 @@
 
 <style>
 
+html,body {
+    height: 100%;
+}
+
 .items-list {
     list-style-type: none;
 }
@@ -39,11 +43,19 @@ div.griditem
     border-bottom: : 1px solid #CCCCCC;
     border-radius: 0px;
     padding: 7px;
+    margin: auto;
 }
 
 
 #page{
     border: 1px solid #CCCCCC;
+    overflow: auto;
+    margin-bottom: 30px;
+}
+
+.section {
+    height: 100%;
+    margin-bottom: 10px;
 }
 
 </style>
@@ -54,6 +66,7 @@ div.griditem
 
 
 <script>
+
 FusionCharts.ready(function () {
     var topStores = new FusionCharts({
         type: 'bar2d',
@@ -71,14 +84,13 @@ FusionCharts.ready(function () {
                 "labelFontSize": "15",
                 "labelFont": "sans-serif",
                 "showCanvasBorder": "0",
-                "bgColor": "#9D9D9D",
                 "usePlotGradientColor": "0",
                 "plotBorderAlpha": "10",
                 "placeValuesInside": "1",
                 "valueFontColor": "#ffffff",
                 "showAxisLines": "0",
-                "axisLineAlpha": "25",
-                "divLineAlpha": "10",
+                "axisLineAlpha": "50",
+                "divLineAlpha": "50",
                 "alignCaptionWithCanvas": "0",
                 "showAlternateVGridColor": "0",
                 "captionFontSize": "14",
@@ -115,39 +127,39 @@ FusionCharts.ready(function () {
 <br>
 <div class="container" id="page">
 
-    <div class="row">
+    <div class="row section">
         <div class="col-lg-12 gridcontainer">
-            <div class="col-lg-12 griditem"><h2><strong>Nombre del projecto:</strong><br>{{project.name}}</h2></div>
-            <div class="col-lg-12 griditem"><h2><strong>Creado por: </strong>{{project.created_by.organization}}</h2></div>
-            <div class="col-lg-12 griditem"><h4> <strong>Objetivo principal:</strong><br> {{project.main_goal}}</h4></div>
-            <div class="col-lg-6 griditem"><h4><strong>Interlocutor:</strong><br> {{project.representative}}</h4></div>
-            <div class="col-lg-6 griditem"><h4><strong>Línea del plan de desarrollo que impacta:</strong><br> {{project.lines_pd}}</h4></div>
+            <div class="col-xs-12 col-lg-12 griditem"><h2><strong>Nombre del projecto:</strong><br>{{project.name}}</h2></div>
+            <div class="col-xs-12 col-lg-12 griditem"><h2><strong>Creado por: </strong>{{project.created_by.organization}}</h2></div>
+            <div class="col-xs-12 col-lg-12 griditem"><h4> <strong>Objetivo principal:</strong><br> {{project.main_goal}}</h4></div>
+            <div class="col-xs-12 col-lg-6 griditem"><h4><strong>Interlocutor:</strong><br> {{project.representative}}</h4></div>
+            <div class="col-xs-12 col-lg-6 griditem"><h4><strong>Línea del plan de desarrollo que impacta:</strong><br> {{project.lines_pd}}</h4></div>
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col-lg-12">
-            <ul class="col-lg-12 items-list">
-                <li class="col-lg-4 items-list-item">
+        <div class="col-xs-12 col-lg-12">
+            <ul class="col-xs-12 col-lg-12 items-list">
+                <li class="col-xs-12 col-lg-4 items-list-item">
                     Tipo de beneficiarios<br>
                     {% if project.beneficiary == "Individuos" %}
-                    <i class="fa fa-users fa-4x" aria-hidden="true"></i><br>
+                    <i class="fa fa-users fa-4x" aria-hidden="true" title="Individupos"></i><br>
                     {% elif project.beneficiary == "Familias" %}
-                    <i class="fa fa-user fa-4x" aria-hidden="true"></i><br>
+                    <i class="fa fa-user fa-4x" aria-hidden="true" title="Familias"></i><br>
                     {% else %}
-                    <i class="fa fa-university fa-4x" aria-hidden="true"></i>
+                    <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i>
                     {% endif %}
                 </li>
-                <li class="col-lg-4 items-list-item">
+                <li class="col-xs-12 col-lg-4 items-list-item">
                     Cantidad de beneficiarios
                     <p class="no-beneficiary" aria-hidden="true">{{ project.no_benef }}</p>
                 </li>
-                <li class="col-lg-4 items-list-item">
+                <li class="col-xs-12 col-lg-4 items-list-item">
                     Inversión
-                    <p class="investment" aria-hidden="true">{{ project.budget }}</p>
+                    <p class="investment" aria-hidden="true" id="budget"></p>
                 </li>
             </ul>
-            <div class="col-lg-12">
+            <div class="col-xs-12 col-lg-12">
                 <h4>Acerca de los beneficiarios:</h4>
                 {% if project.beneficiary_comments  %}
                 <p>{{project.beneficiary_comments}}</p>
@@ -158,7 +170,7 @@ FusionCharts.ready(function () {
         </div>
     </div>
 
-    <div class="row" style="border-radius: 5px;">
+    <div class="row section">
         <div class="col-lg-12">
             <h4><strong>Cronograma general</strong></h4>
             <div id="chart-container"></div>
@@ -166,7 +178,7 @@ FusionCharts.ready(function () {
     </div>
 
     <br>
-    <div class="row">
+    <div class="row section">
           <div class="container col-lg-12">
             <h4><strong>Actividades programadas</strong></h4>
             <div class="panel-group" id="accordion">
@@ -174,10 +186,10 @@ FusionCharts.ready(function () {
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> <strong>Actividad</strong>: {{task_element.task}}</a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}"> <strong>Actividad</strong>: {{task_element.task}}</a>
                         </h4>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
+                    <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <strong>Observaciones</strong>:{% if task_element.comments %} {{task_element.comments}} {% endif %} <br>
                             <strong>Estado</strong>: {{task_element.completion}}<br>
@@ -192,7 +204,7 @@ FusionCharts.ready(function () {
     </div>
 
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-12">
           <h4><strong>Fotos y videos</strong></h4>
           <div class="list-group">
@@ -203,8 +215,23 @@ FusionCharts.ready(function () {
               <img class="card-img-top img-fluid" width="200" height="200" src="http://placehold.it/900x400" alt="">
           </div>
       </div>
-    </div>
+    </div> -->
 
  </div>
+
+<script>
+
+// Format number
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+var val = parseInt('{{project.budget}}');
+val = numberWithCommas(val);
+
+var element = document.getElementById("budget");
+element.innerHTML = "$"+val;
+
+</script>
+
 
 {% endblock %}

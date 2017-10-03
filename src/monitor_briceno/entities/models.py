@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-# from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.signals import user_logged_in
 from django.db import models
 
 
@@ -77,7 +77,7 @@ class UserProfile(AbstractUser, PermissionsMixin):
         return 'Correo: ' + self.email + '; organización: ' + self.organization
 
 
-def login_user(sender, request, userprofile, **kwargs):
-    userprofile.login_count = userprofile.login_count + 1
-    userprofile.save()
-# user_logged_in.connect(login_user)
+def login_user(sender, request, user, **kwargs):
+    user.login_count = user.login_count + 1
+    user.save()
+user_logged_in.connect(login_user)
