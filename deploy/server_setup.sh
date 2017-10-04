@@ -32,7 +32,7 @@ pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
 cd $PROJECT_BASE_PATH/monitor-briceno-proj/src
 
 # Setup Supervisor to run our uwsgi process.
-cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/monitor_briceno.conf
+cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/supervisor_monitor_briceno.conf /etc/supervisor/conf.d/monitor_briceno.conf
 supervisorctl reread
 supervisorctl update
 supervisorctl restart monitor_briceno
