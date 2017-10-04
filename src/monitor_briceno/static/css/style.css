@@ -85,7 +85,7 @@ body{
     margin-bottom: 0;
     margin-top: 0;
     /*background-color: #618400;*/
-    background-color: #202B00;
+    background-color: rgb(35, 45, 5);
     color: black;
 }
 
@@ -115,6 +115,9 @@ body{
     color: #fff;
 }
 
+.nav.navbar-nav.navbar-right li.active a {
+    color: #555555;
+}
 /*Footer*/
 
 .navbar-center
