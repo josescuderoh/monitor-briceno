@@ -34,29 +34,33 @@ class Veredas(models.Model):
 
 # Create project class
 class Project(models.Model):
+    """Model for projects of each entity"""
     # Usuario
     created_by = models.ForeignKey(UserProfile, related_name='created_by', on_delete=models.CASCADE)
     # Nombre del proyecto
-    name = models.CharField(verbose_name="Nombre del Proyecto", max_length=250)
+    name = models.CharField(verbose_name="Nombre del proyecto", max_length=250)
     # Objetivo de impacto
     main_goal = models.CharField(verbose_name="Objetivo principal", max_length=500)
     # Destinatario de la ejecución
     BENEF_CHOICES = (("Individuos", "Individuos"),
                      ("Instituciones", "Instituciones"),
                      ("Familias", "Familias"))
-    beneficiary = models.CharField(verbose_name="Beneficiarios", choices=BENEF_CHOICES, max_length=30)
+    beneficiary = models.CharField(verbose_name="Tipo de beneficiarios", choices=BENEF_CHOICES, max_length=30)
     beneficiary_comments = models.CharField(verbose_name="Observaciones sobre los beneficiarios",
                                             max_length=100, blank=True, null=True)
     # Cantidad de beneficiarios
-    no_benef = models.IntegerField(verbose_name="Número de Beneficiarios")
+    no_benef = models.IntegerField(verbose_name="Número de beneficiarios")
     # Fecha de inicio
-    start_date = models.DateField(verbose_name="Fecha de inicio")
+    start_date = models.DateField(verbose_name="Fecha de inicio", help_text="Seleccionar en el calendario.")
     # Fecha de finalización
-    end_date = models.DateField(verbose_name="Fecha de finalización")
+    end_date = models.DateField(verbose_name="Fecha de finalización", help_text="Seleccionar en el calendario.")
     # #Cobertura en las veredas
-    coverage = models.ManyToManyField(Veredas, verbose_name="Veredas beneficiadas")
+    coverage = models.ManyToManyField(Veredas, verbose_name="Veredas beneficiadas",
+                                      help_text="Usar Crtl para seleccionar más de una opción.")
     # Monto de ejecución
-    budget = models.IntegerField(verbose_name="Monto de ejecución", blank=True, null=True)
+    budget = models.IntegerField(verbose_name="Monto de ejecución",
+                                 help_text='Cifra en pesos colombianos',
+                                 blank=True, null=True)
     # Dependencia de la alcaldía
     MUN_CHOICES = (
         ("Ninguna", "Ninguna"),
@@ -65,7 +69,7 @@ class Project(models.Model):
         ("Tesorería de Rentas", "Tesorería de Rentas"),
         ("Secretaría de Planeación y Obras Municipales", "Secretaría de Planeación y Obras Municipales"),
         ("Secretaría para la Educación para la Cultura y el Desarrollo", "Secretaría para la Educación para la Cultura y el Desarrollo"))
-    representative = models.CharField(verbose_name="Interlocutor", max_length=200, choices=MUN_CHOICES)
+    representative = models.CharField(verbose_name="Interlocutor en el municipio", max_length=200, choices=MUN_CHOICES)
     # Linea del plan a la cual impactan
     PD_CHOICES = (
         ("Ninguna", "Ninguna"),
@@ -74,7 +78,7 @@ class Project(models.Model):
         ("Briceño legal, transparente, seguro y en paz", "Briceño legal, transparente, seguro y en paz"),
         ("Briceño sostenible y protector del medio ambiente", "Briceño sostenible y protector del medio ambiente")
     )
-    lines_pd = models.CharField(verbose_name="Líneas del plan que impactan", max_length=200, choices=PD_CHOICES)
+    lines_pd = models.CharField(verbose_name="Líneas del plan de desarrollo que impacta", max_length=200, choices=PD_CHOICES)
     # Se ha cerrado el proyecto
     closed = models.BooleanField(default=False)
     # Control de cambios
@@ -110,13 +114,14 @@ class Project(models.Model):
 
 # Associated tasks to project
 class ProjectTask(models.Model):
+    """Tasks or activities defined inside each project"""
     # ID del proyecto
     project = models.ForeignKey(Project, related_name="tasks")
     # Tarea
-    task = models.CharField(verbose_name="Tarea", max_length=50)
-    # Nivel de ejecición
+    task = models.CharField(verbose_name="Actividad", max_length=50)
+    # Nivel de ejecución
     LEVELS = (('Por iniciar', 'Por iniciar'), ('En curso', 'En curso'), ('Terminada', 'Terminada'))
-    completion = models.CharField(verbose_name="Estado",
+    completion = models.CharField(verbose_name="Estado de ejecución",
                                   choices=LEVELS, default=False, max_length=20)
     # Observaciones
     comments = models.CharField(verbose_name="Observaciones", max_length=100, blank=True, null=True)

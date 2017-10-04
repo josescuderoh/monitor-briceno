@@ -15,9 +15,9 @@ urlpatterns = [
     # Projects url
     url(r'^$', views.ProjectsView.as_view(), name='projects-list'),
     # # Detail of projects url
-    url(r'^projects/(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     # Add project url
-    url(r'^projects/add/$', views.ProjectCreate.as_view(), name='project-add'),
+    url(r'^add/$', views.ProjectCreate.as_view(), name='project-add'),
     # Update project url
-    url(r'^projects/(?P<pk>[0-9]+)/edit/$', views.ProjectUpdate.as_view(), name='project-update'),
+    url(r'^(?P<pk>[0-9]+)/edit/$', views.ProjectUpdate.as_view(), name='project-update'),
 ]
