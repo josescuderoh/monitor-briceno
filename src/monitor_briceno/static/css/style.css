@@ -1,5 +1,37 @@
 body{
     background-color: #fff;
+    padding-bottom: 50px;
+    height: 100%;
+}
+
+.form-container{
+    border: solid 1px #CCCCCC;
+    border-radius: 10px;
+    width: 40%;
+    min-width: 500px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.small-form-container{
+    border: solid 1px #CCCCCC;
+    border-radius: 10px;
+    width: 30%;
+    vertical-align: middle;
+    min-width: 500px;
+    max-height: 50vh;
+    margin-top: 25vh;
+    margin-bottom: 25vh;
+    top: 50%;
+    bottom: 50%;
+}
+
+.container.form-container h3{
+    text-align: center;
+}
+
+.container.small-form-container h3{
+    text-align: center;
 }
 
 #projects_title report-title{

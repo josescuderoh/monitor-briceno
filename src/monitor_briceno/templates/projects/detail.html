@@ -49,8 +49,8 @@ div.griditem
 
 #page{
     border: 1px solid #CCCCCC;
-    overflow: auto;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+    border-radius: 10px;
 }
 
 .section {
@@ -140,7 +140,7 @@ FusionCharts.ready(function () {
     <div class="row">
         <div class="col-xs-12 col-lg-12">
             <ul class="col-xs-12 col-lg-12 items-list">
-                <li class="col-xs-12 col-lg-4 items-list-item">
+                <li class="col-xs-6 col-lg-4 items-list-item">
                     Tipo de beneficiarios<br>
                     {% if project.beneficiary == "Individuos" %}
                     <i class="fa fa-users fa-4x" aria-hidden="true" title="Individupos"></i><br>
@@ -150,7 +150,7 @@ FusionCharts.ready(function () {
                     <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i>
                     {% endif %}
                 </li>
-                <li class="col-xs-12 col-lg-4 items-list-item">
+                <li class="col-xs-6 col-lg-4 items-list-item">
                     Cantidad de beneficiarios
                     <p class="no-beneficiary" aria-hidden="true">{{ project.no_benef }}</p>
                 </li>
@@ -202,7 +202,6 @@ FusionCharts.ready(function () {
             </div>
           </div>
     </div>
-
 
     <!-- <div class="row">
         <div class="col-lg-12">

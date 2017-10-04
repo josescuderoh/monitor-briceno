@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Satisfy|Baloo+Bhaijaan|Open+Sans" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 
     {% block extrahead %}{% endblock %}
 
@@ -71,7 +71,7 @@
                 </ul>
                 <p class="nav navbar-text navbar-right">
                     {% if user.is_authenticated %}
-                    Bienvenido, <a href="{% url 'entities:profile-update' user.id%}">{{ user.get_short_name }}</a>&nbsp;
+                    Bienvenido, <a href="{% url 'entities:profile-update' user.id%}">{{ user.get_short_name }}</a>&nbsp;&nbsp;&nbsp;
                     {% else %}
                     Bienvenido, Invitado&nbsp;
                     {% endif %}
@@ -79,6 +79,7 @@
             </div>
         </div>
     </nav>
+
 
 {% block body %}
 {% endblock %}
