@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.http import Http404, HttpResponse
 from django.views import generic
 from django.utils import timezone

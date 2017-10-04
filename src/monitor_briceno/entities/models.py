@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.signals import user_logged_in

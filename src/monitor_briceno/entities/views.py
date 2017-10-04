@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text

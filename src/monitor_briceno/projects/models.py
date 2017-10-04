@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from entities.models import UserProfile
 from django.contrib.gis.db import models as geo_models

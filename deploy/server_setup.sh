@@ -16,14 +16,14 @@ apt-get install -y python3-dev python-pip supervisor nginx git
 apt-get install redis-server libgdal-dev
 
 # Upgrade pip to the latest version.
-pip install --upgrade pip
-pip install virtualenv
+sudo pip install --upgrade pip
+sudo pip install virtualenv
 
 mkdir -p $PROJECT_BASE_PATH
 git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/monitor-briceno-proj
 
 mkdir -p $VIRTUALENV_BASE_PATH
-virtualenv  $VIRTUALENV_BASE_PATH/monitor_briceno
+sudo virtualenv  $VIRTUALENV_BASE_PATH/monitor_briceno
 
 source $VIRTUALENV_BASE_PATH/monitor_briceno/bin/activate
 pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
