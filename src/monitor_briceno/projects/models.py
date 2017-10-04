@@ -90,7 +90,7 @@ class Project(models.Model):
         verbose_name_plural = "Proyectos"
 
     def get_absolute_url(self):
-        reverse('cooperacion:detail', kwargs={'pk': self.pk})
+        reverse('projects:detail', kwargs={'pk': self.pk})
 
     @property
     def status(self):

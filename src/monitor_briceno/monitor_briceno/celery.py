@@ -19,7 +19,7 @@ django.setup()
 app.conf.update(
     CELERYBEAT_SCHEDULE={
         'send-every-half-month': {
-            'task': 'cooperacion.tasks.check_infrequent_users',
+            'task': 'entities.tasks.check_infrequent_users',
             'schedule': timedelta(days=15),
         },
     }
