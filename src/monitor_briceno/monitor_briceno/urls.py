@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from projects.views import HomeView
 
 urlpatterns = [
+    # Admin view
     url(r'^admin/', admin.site.urls),
+    # Index view
+    url(r'^$', HomeView.as_view(), name='home'),
     url(r'^entities/', include('entities.urls')),
     url(r'^projects/', include('projects.urls')),
     # Urls required for password reset

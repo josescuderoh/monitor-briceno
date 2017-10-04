@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'entities/login.html',
                                         'authentication_form': LoginForm}, name='login'),
     # Logout url
-    url(r'^logout/$', auth_views.logout, {'next_page': '/projects/'}, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 ]

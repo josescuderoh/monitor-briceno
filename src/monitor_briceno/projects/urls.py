@@ -4,8 +4,6 @@ from . import views
 app_name = 'projects'
 
 urlpatterns = [
-    # Index view
-    url(r'^$', views.HomeView.as_view(), name='home'),
     # Maps url
     url(r'^mapas/$', views.MapView.as_view(), name='maps'),
     # Report url json
@@ -15,7 +13,7 @@ urlpatterns = [
     # Url for json data of veredas
     url(r'^veredas_data/$', views.MapDataView, name='veredas'),
     # Projects url
-    url(r'^list/$', views.ProjectsView.as_view(), name='projects-list'),
+    url(r'^$', views.ProjectsView.as_view(), name='projects-list'),
     # # Detail of projects url
     url(r'^projects/(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     # Add project url
