@@ -3,11 +3,13 @@
 # TODO: Set to URL of git repo.
 PROJECT_GIT_URL='https://github.com/josescuderoh/monitor-briceno.git'
 
-PROJECT_BASE_PATH='/usr/local/apps'
-VIRTUALENV_BASE_PATH='/usr/local/virtualenvs'
+mkdir /home/ubuntu/projects
+PROJECT_NAME='monitor-briceno'
+PROJECT_BASE_PATH='/home/ubuntu/projects/$PROJECT_NAME'
+VIRTUALENV_BASE_PATH='/home/ubuntu/projects/$PROJECT_NAME'
 
 # Set Ubuntu Language
-locale-gen en_GB.UTF-8
+locale-gen es_ES.UTF-8
 
 # Install Python, and pip
 sudo

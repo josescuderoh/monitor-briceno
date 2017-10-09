@@ -1,13 +1,16 @@
 {% extends 'projects/base.html' %}
 {% block title %}Mapas{% endblock %}
 
-
 {% block extrahead %}
 
 {% load static %}
 {% load leaflet_tags %}
 {% leaflet_js %}
 {% leaflet_css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}"/>
+<script type="text/javascript" src="{% static 'src/leaflet.ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
 
 <style type="text/css">
 
@@ -74,10 +77,9 @@
 
 </style>
 
-<link rel="stylesheet" type="text/css" href="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}"/>
-<script type="text/javascript" src="{% static 'src/leaflet.ajax.js' %}"></script>
-<script type="text/javascript" src="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
+
 <script type="text/javascript">
+
 
 function numberWithCommas(x) {
     var parts = x.toString().split(".");

@@ -4,10 +4,7 @@ Este es el código fuente de la plataforma de integración de la cooperación el
 
 ## Ejecución del worker redis para envío de confirmación de correos.
 
-Para correr el servidor redis-server (cuando ya ha sido instalado) se ejecuta el siguiente comando
-en la consola desde la raíz del proyecto de django
-
-celery worker -A monitor_briceno --loglevel=info
+Para correr el servidor redis-server (cuando ya ha sido instalado) se ejecuta el siguiente comando en la consola desde la raíz del proyecto de django
 
 Para ejecutar el celery beat y celery worker se ejecuta el siguiente comando
 
@@ -25,3 +22,8 @@ redis-server
 
 To install dependencies for gdal
 sudo apt-get install libgdal-dev
+
+# On server
+
+Grant permissions for access to the monitor_venv/run folder
+sudo chown -R testuser:testuser /var/www/test/public_html
