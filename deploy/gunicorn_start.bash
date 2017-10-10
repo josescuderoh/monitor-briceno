@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NAME="monitor_briceno"                                   # Name of the application
-DJANGODIR=/home/ubuntu/projects/monitor-briceno/monitor-briceno-proj/src/monitor_briceno               # Django project
-SOCKFILE=/home/ubuntu/projects/monitor-briceno/monitor_venv/run/gunicorn.sock  # we will communicte using this unix socket
+DJANGODIR=/usr/local/apps/monitor-briceno-proj/src/monitor_briceno               # Django project
+SOCKFILE=/usr/local/virtualenvs/monitor_venv/run/gunicorn.sock  # we will communicte using this unix socket
 USER=ubuntu                                         # the user to run as
 GROUP=ubuntu                                        # the group to run as
 NUM_WORKERS=3                                       # how many worker processes should Gunicorn spawn
@@ -10,15 +10,14 @@ DJANGO_SETTINGS_MODULE=monitor_briceno.settings      # which settings file shoul
 DJANGO_WSGI_MODULE=monitor_briceno.wsgi              # WSGI module name
 echo "Starting $NAME as `whoami`"
 
-# Activate the virtual environment
+# Make sure the virtual environment is activated
 
 cd $DJANGODIR
-source /home/ubuntu/projects/monitor-briceno/monitor_venv/bin/activate
+source /usr/local/virtualenvs/monitor_venv/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
 # Create the run directory if it doesn't exist
-
 RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
 

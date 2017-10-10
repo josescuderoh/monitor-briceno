@@ -2,10 +2,10 @@
 
 # Wrapper script for running celery with virtualenv and env variables set
 
-VENVDIR=/home/ubuntu/projects/monitor-briceno
-DJANGODIR=$VENVDIR/monitor-briceno-proj/src/monitor_briceno
+VENVDIR=/usr/local/virtualenvs
+DJANGODIR=/usr/local/apps/monitor-briceno-proj/src/monitor_briceno
 
-echo "Starting celery with args $@"
+echo "Starting celery..."
 
 # Activate the virtual environment.
 cd $VENVDIR

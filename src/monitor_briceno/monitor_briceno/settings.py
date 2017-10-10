@@ -135,9 +135,6 @@ USE_TZ = True
 # Define paths for static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
 
 # Define user models
 AUTH_USER_MODEL = 'entities.UserProfile'
