@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import UserProfile
 from django import forms
@@ -30,6 +29,6 @@ class UserProfileFormUpdate(forms.ModelForm):
                   'phone', 'organization', 'address')
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(UserProfileFormUpdate, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['readonly'] = True
         self.fields['organization'].widget.attrs['readonly'] = True

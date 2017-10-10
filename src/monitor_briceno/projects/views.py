@@ -72,7 +72,7 @@ class DetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
         # Assign values
-        context = super().get_context_data(**kwargs)
+        context = super(DetailView, self).get_context_data(**kwargs)
         # Calculate days
         start = self.object.start_date
         end = self.object.end_date
