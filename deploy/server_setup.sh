@@ -57,7 +57,7 @@ sudo chown -R ubuntu:ubuntu $VIRTUALENV_BASE_PATH/monitor_venv/run
 # Setup nginx to make our application accessible.
 sudo cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/nginx_monitor_briceno.conf /etc/nginx/sites-available/monitor_briceno.conf
 # sudo rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/monitor_briceno.conf /etc/nginx/sites-enabled/monitor_briceno.conf
+sudo ln -s /etc/nginx/sites-available/monitor_briceno.conf /etc/nginx/sites-enabled/monitor_briceno.conf
 sudo systemctl restart nginx.service
 
 echo "DONE! :)"
