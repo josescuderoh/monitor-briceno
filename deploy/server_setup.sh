@@ -29,6 +29,11 @@ sudo pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
 # Run migrations
 cd $PROJECT_BASE_PATH/monitor-briceno-proj/src
 
+#Create executables for supervisor
+cd $PROJECT_BASE_PATH/monitor-briceno-proj/deploy
+sudo chmod u+x gunicorn_start.bash
+sudo chmod u+x celery_supervisor.bash
+
 # Setup Supervisor to run our uwsgi process.
 sudo cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/supervisor_monitor_briceno.conf /etc/supervisor/conf.d/monitor_briceno.conf
 sudo supervisorctl reread
