@@ -34,12 +34,25 @@ cd $PROJECT_BASE_PATH/monitor-briceno-proj/deploy
 sudo chmod u+x gunicorn_start.bash
 sudo chmod u+x celery_supervisor.bash
 
+#Create log files
+cd $PROJECT_BASE_PATH/monitor-briceno-proj
+sudo mkdir log
+cd log
+sudo touch nginx-access.log
+sudo touch nginx-error.log
+sudo touch monitor_briceno.log
+sudo touch monitor_briceno_err.log
+sudo touch celery_default.out.log
+sudo touch celery_default.err.log
+
 # Setup Supervisor to run our uwsgi process.
 sudo cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/supervisor_monitor_briceno.conf /etc/supervisor/conf.d/monitor_briceno.conf
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl restart monitor_briceno
 sudo supervisorctl restart celery_default
+
+sudo chown -R ubuntu:ubuntu $VIRTUALENV_BASE_PATH/monitor_venv/run
 
 # Setup nginx to make our application accessible.
 sudo cp $PROJECT_BASE_PATH/monitor-briceno-proj/deploy/nginx_monitor_briceno.conf /etc/nginx/sites-available/monitor_briceno.conf
