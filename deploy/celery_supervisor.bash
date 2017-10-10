@@ -14,4 +14,4 @@ cd $VENVDIR
 # Programs meant to be run under supervisor should not daemonize themselves
 # (do not use --daemon).
 cd $DJANGODIR
-exec celery --app=monitor_briceno worker -B --loglevel=info
+sudo exec celery --app=monitor_briceno worker -B --loglevel=info
