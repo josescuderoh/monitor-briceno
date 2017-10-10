@@ -21,7 +21,7 @@ sudo mkdir -p $PROJECT_BASE_PATH
 sudo git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/monitor-briceno-proj
 
 sudo mkdir -p $VIRTUALENV_BASE_PATH
-sudo virtualenv -python python3  $VIRTUALENV_BASE_PATH/monitor_venv
+sudo virtualenv -p python3  $VIRTUALENV_BASE_PATH/monitor_venv
 
 source $VIRTUALENV_BASE_PATH/monitor_venv/bin/activate
 sudo pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
