@@ -15,7 +15,7 @@ echo "Starting $NAME as `whoami`"
 cd $DJANGODIR
 source /usr/local/virtualenvs/monitor_venv/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+export PYTHONIOENCODING=UTF-8
 
 # Create the run directory if it doesn't exist
 RUNDIR=$(dirname $SOCKFILE)

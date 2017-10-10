@@ -6,16 +6,16 @@ PROJECT_GIT_URL='https://github.com/josescuderoh/monitor-briceno.git'
 PROJECT_BASE_PATH='/usr/local/apps'
 VIRTUALENV_BASE_PATH='/usr/local/virtualenvs'
 # Set Ubuntu Language
-locale-gen es_ES.UTF-8
+sudo locale-gen es_ES.UTF-8
 
 # Install Python, and pip
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install -y python3-dev python-pip supervisor nginx git redis-server libgdal-dev
+sudo apt-get install -y python3-dev python3-pip supervisor nginx git redis-server libgdal-dev
 sudo apt-get install python-virtualenv
 
 # Upgrade pip to the latest version.
-sudo pip install --upgrade pip
+sudo pip3 install --upgrade pip
 
 sudo mkdir -p $PROJECT_BASE_PATH
 sudo git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/monitor-briceno-proj

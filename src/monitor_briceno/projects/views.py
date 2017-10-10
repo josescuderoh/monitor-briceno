@@ -192,11 +192,11 @@ class ReportData(APIView):
         statuses = {key_map[key]: val for key, val in status.items()}
 
         # Process lineas_pd data
-        lineas_dict = {"Briceño sostenible y protector del medio ambiente": 0,
-                       "Cambio para el desarrollo económico de Briceño": 0,
-                       "Briceño legal, transparente, seguro y en paz": 0,
-                       "Briceño con inclusión social para la paz": 0,
-                       "Ninguna": 0}
+        lineas_dict = {u"Briceño sostenible y protector del medio ambiente": 0,
+                       u"Cambio para el desarrollo económico de Briceño": 0,
+                       u"Briceño legal, transparente, seguro y en paz": 0,
+                       u"Briceño con inclusión social para la paz": 0,
+                       u"Ninguna": 0}
 
         # Create objects required for radar data
         category = []
