@@ -20,9 +20,10 @@ sudo git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/monitor-briceno-proj
 #Create and activate virtualenv
 sudo mkdir -p $VIRTUALENV_BASE_PATH
 sudo virtualenv -p python3  $VIRTUALENV_BASE_PATH/monitor_venv
+sudo chown -R ubuntu:ubuntu /usr/local/virtualenvs/monitor_venv
 
 source $VIRTUALENV_BASE_PATH/monitor_venv/bin/activate
-sudo pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
+pip install -r $PROJECT_BASE_PATH/monitor-briceno-proj/requirements.txt
 
 #Install requirements
 sudo apt-get install python3-dev
