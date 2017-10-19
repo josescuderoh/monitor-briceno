@@ -135,11 +135,11 @@ FusionCharts.ready(function () {
                 <li class="col-xs-6 col-lg-4 items-list-item">
                     Tipo de beneficiarios<br>
                     {% if project.beneficiary == "Individuos" %}
-                    <i class="fa fa-user fa-4x" aria-hidden="true" title="Individupos"></i><br>
+                    <i class="fa fa-user fa-4x" aria-hidden="true" title="Individupos"></i><br><h6>Individuos</h6>
                     {% elif project.beneficiary == "Familias" %}
-                    <i class="fa fa-home fa-4x" aria-hidden="true" title="Familias"></i><br>
+                    <i class="fa fa-home fa-4x" aria-hidden="true" title="Familias"></i><br><h6>Familias</h6>
                     {% else %}
-                    <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i>
+                    <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i><h6>Instituciones</h6>
                     {% endif %}
                 </li>
                 <li class="col-xs-6 col-lg-4 items-list-item">

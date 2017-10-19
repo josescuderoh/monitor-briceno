@@ -30,7 +30,7 @@
     .circleBase {
         border-radius: 50%;
         position: absolute;
-        top: 100px;
+        top: 70px;
         z-index: 50;
         right: 70px;
         text-align: center;
@@ -39,17 +39,18 @@
     }
 
     .type1 {
-        width: 120px;
-        height: 120px;
+        width: 13vh;
+        height: 13vh;
         background: #fff;
-        border: 3px solid #003300;
+        border: 2px solid #003300;
     }
 
-    h4 {
+    #circle-text {
         display: table-cell;
         vertical-align: middle;
         text-align:center;
         opacity: 1;
+        font-size: 2vh;
     }
 
     .leaflet-pane {
@@ -206,7 +207,7 @@ function out_layers(map,options){
 <div id="loading"></div>
 
 <div class="circleBase type1" id="overlay">
-    <h4>Capas disponibles</h4>
+    <p id="circle-text">Capas disponibles</p>
 </div>
 
 <div class="container">

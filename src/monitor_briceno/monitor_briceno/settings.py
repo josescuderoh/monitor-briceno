@@ -172,7 +172,7 @@ CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 # Config for leaflet
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (7.113343, -75.554834),
-    'DEFAULT_ZOOM': 12,
+    'DEFAULT_ZOOM': 11,
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
     'RESET_VIEW': False

@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         {% if request.user.is_superuser %}
-                        <h4>Creado por: {{ project.created_by.profile.organization }}</h4>
+                        <h4>Creado por: {{ project.created_by.organization }}</h4>
                         {% endif %}
                         {% language 'es' %}
                         <h5 class="date">Fecha de inicio: {{ project.start_date|date:'D, d N' }}</h5>

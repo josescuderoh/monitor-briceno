@@ -27,19 +27,7 @@ body{
     position: relative;
     border: solid 1px #CCCCCC;
     border-radius: 10px;
-    width: 40%;
-    min-width: 550px;
-}
-
-.small-form-container{
-    border: solid 1px #CCCCCC;
-    border-radius: 10px;
-    width: 30%;
-    vertical-align: middle;
-    min-width: 400px;
-    max-height: 50vh;
-    top: 50%;
-    bottom: 50%;
+    width: 40vh;
 }
 
 .list-group {

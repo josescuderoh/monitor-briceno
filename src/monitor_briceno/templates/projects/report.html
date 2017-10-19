@@ -4,11 +4,15 @@
 {% block extrahead %}
 
 <style>
+    #header-container {
+        display: none;
+    }
+
     #loading {
         display: block;
-        position: absolute;
+        position: relative;
         z-index: 100;
-        min-height: calc(100vh - 100px);
+        height: calc(100vh - 100px);
         width: 100%;
         background-color: #fff;
         background-image: url("/static/images/ajax-loader2.gif");
@@ -54,7 +58,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'pie2d',
                             renderAt: 'interlocutores_chart',
-                            width: '550',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -83,7 +87,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'column2d',
                             renderAt: 'status_chart',
-                            width: '400',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -112,7 +116,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'column2d',
                             renderAt: 'bud_org_chart',
-                            width: '400',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -142,7 +146,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'column2d',
                             renderAt: 'proj_org_chart',
-                            width: '400',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -171,7 +175,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'pie2d',
                             renderAt: 'tipo_benef_chart',
-                            width: '450',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -200,7 +204,7 @@
                         var fusioncharts = new FusionCharts({
                             type: 'pie2d',
                             renderAt: 'tipo_benef_chart',
-                            width: '400',
+                            width: '100%',
                             height: '300',
                             dataFormat: 'json',
                             dataSource: newdata,
@@ -254,6 +258,7 @@
 
     $.when(data_ajax()).done(function() {
         $('#loading').hide();
+        $('#header-container').show();
     });
 
 </script>
@@ -278,7 +283,7 @@ hr {
 
 
 <div id="loading"></div>
-<div class="container">
+<div class="container" id="header-container">
     <div class="row">
         <div class="col-sm-3" align="center">
             <img src="/static/images/escudo.svg" width="150" height="150">
@@ -318,6 +323,5 @@ hr {
     <div class="col-sm-12 col-md-6" align="center" id="interlocutores_chart"></div>
     <div class="col-sm-12 col-md-6" align="center" id="tipo_benef_chart"></div>
     <div class="col-sm-12" align="center" id="lineaspd_chart"></div>
-
 </div>
 {% endblock %}
