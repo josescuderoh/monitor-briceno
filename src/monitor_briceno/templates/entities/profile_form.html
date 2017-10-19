@@ -5,25 +5,27 @@
 {% load static %}
 {% block body %}
 
-<div class="container form-container">
-        <div class="col-sm-12 col-lg-12">
-            {% if not updated%}
-            <h3>Editar perfil</h3>
-            <br>
-            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <div class="form-group col-sm-12">
-                    {% bootstrap_form user_form layout='horizontal' size='small'%}
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-success">Actualizar</button>
+<div class="main-container">
+    <div class="container form-container">
+            <div class="col-sm-12 col-lg-12">
+                {% if not updated%}
+                <h3>Editar perfil</h3>
+                <br>
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group col-sm-12">
+                        {% bootstrap_form user_form layout='horizontal' size='small'%}
                     </div>
-                </div>
-            </form>
-            {% else %}
-            <h3>Su perfil fue actualizado correctamente</h3>
-            {% endif %}
-        </div>
+                    <div class="form-group">
+                        <div class="col-sm-12" align="center">
+                            <button type="submit" class="btn btn-success">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <h3>Su perfil fue actualizado correctamente</h3>
+                {% endif %}
+            </div>
+    </div>
 </div>
 
 {% endblock %}

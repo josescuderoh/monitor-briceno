@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cuenta confirmada exitosamente</title>
-</head>
-<body>
-Gracias por confirmar su cuenta. Ahora puede entrar haciendo click <a href="{% url 'cooperacion:login' %}">aquí.</a>
-</body>
-</html>
+
+{% extends 'projects/base.html' %}
+{% block title %}Registro exitoso{% endblock %}
+
+{% load static %}
+{% block body %}
+
+<div class="main-container">
+<div class="container form-container">
+<p> Gracias por confirmar su cuenta. Ahora puede ingresar haciendo click <a href="{% url 'cooperacion:login' %}">aquí.</a> </p>
+</div>
+</div>
+
+{% endblock %}

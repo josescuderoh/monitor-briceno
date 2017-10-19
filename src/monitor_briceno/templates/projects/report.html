@@ -3,239 +3,259 @@
 
 {% block extrahead %}
 
+<style>
+    #loading {
+        display: block;
+        position: absolute;
+        z-index: 100;
+        height: calc(100vh - 50px);
+        width: 100%;
+        /*background-color: rgba(192, 192, 192,1);*/
+        background-color: #fff;
+        background-image: url("/static/images/ajax-loader2.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+</style>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script type="text/javascript" src="/static/src/fusioncharts/js/fusioncharts.js"></script>
 <script type="text/javascript" src="/static/src/fusioncharts/js/themes/fusioncharts.theme.fint.js"></script>
 
-
 <script type="text/javascript">
-    $(document).ready(function(){
-    var endpoint = '/projects/reporte/data/'
-    $.ajax({
-        method:"GET",
-        url:endpoint,
-        success: function(data){
-            document.getElementById("veredas").innerHTML = data.no_veredas.toString();
-            document.getElementById("projects").innerHTML = data.no_projects.toString();
-            document.getElementById("entities").innerHTML = data.no_entities.toString();
-            console.log(data)
-            // Chart for representatives
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Organizaciones interlocutoras",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        //Theme
-                        "theme": "fint"
-                    },
-                    "data": data.representative
-                };
 
-                var fusioncharts = new FusionCharts({
-                    type: 'pie2d',
-                    renderAt: 'interlocutores_chart',
-                    width: '550',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+        $('#loading').show();
+            var endpoint = '/projects/reporte/data/'
+            function data_ajax(){
+            return $.ajax({
+                method:"GET",
+                url:endpoint,
+                success: function(data){
+                    document.getElementById("veredas").innerHTML = data.no_veredas.toString();
+                    document.getElementById("projects").innerHTML = data.no_projects.toString();
+                    document.getElementById("entities").innerHTML = data.no_entities.toString();
+                    // Chart for representatives
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Organizaciones interlocutoras",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                //Theme
+                                "theme": "fint"
+                            },
+                            "data": data.representative
+                        };
 
-            //Chart for state of projects
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Estado de los proyectos",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        "showValues":"0",
-                        //Theme
-                        "theme": "fint"
-                    },
-                    "data": data.statuses
-                };
+                        var fusioncharts = new FusionCharts({
+                            type: 'pie2d',
+                            renderAt: 'interlocutores_chart',
+                            width: '550',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'column2d',
-                    renderAt: 'status_chart',
-                    width: '400',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart for state of projects
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Estado de los proyectos",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                "showValues":"0",
+                                //Theme
+                                "theme": "fint"
+                            },
+                            "data": data.statuses
+                        };
 
-            //Chart for investment per organization
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Inversión por organización",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        "showValues":"0",
-                        //Theme
-                        "theme": "fint"
-                    },
-                    "data": data.budget_per_organization
-                };
+                        var fusioncharts = new FusionCharts({
+                            type: 'column2d',
+                            renderAt: 'status_chart',
+                            width: '400',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'column2d',
-                    renderAt: 'bud_org_chart',
-                    width: '400',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart for investment per organization
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Inversión por organización",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                "showValues":"0",
+                                //Theme
+                                "theme": "fint"
+                            },
+                            "data": data.budget_per_organization
+                        };
 
-            //Chart for projects per organization
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Cantidad de proyectos por organización",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        "showValues":"0",
-                        //Theme
-                        "theme": "fint",
-                        "setAdaptiveYMin":"0"
-                    },
-                    "data": data.projects_per_organization
-                };
+                        var fusioncharts = new FusionCharts({
+                            type: 'column2d',
+                            renderAt: 'bud_org_chart',
+                            width: '400',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'column2d',
-                    renderAt: 'proj_org_chart',
-                    width: '400',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart for projects per organization
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Cantidad de proyectos por organización",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                "showValues":"0",
+                                //Theme
+                                "theme": "fint",
+                                "setAdaptiveYMin":"0"
+                            },
+                            "data": data.projects_per_organization
+                        };
 
-            //Chart for type of beneficiary
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Tipos de beneficiarios",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        "showValues":"0",
-                        //Theme
-                        "theme": "fint"
-                    },
-                    "data": data.beneficiary
-                };
+                        var fusioncharts = new FusionCharts({
+                            type: 'column2d',
+                            renderAt: 'proj_org_chart',
+                            width: '400',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'pie2d',
-                    renderAt: 'tipo_benef_chart',
-                    width: '450',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart for type of beneficiary
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Tipos de beneficiarios",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                "showValues":"0",
+                                //Theme
+                                "theme": "fint"
+                            },
+                            "data": data.beneficiary
+                        };
 
-            //Chart impact on PD lines
-            FusionCharts.ready(function(){
-                var newdata= {
-                    "chart": {
-                        "caption": "Tipos de beneficiarios",
-                        "enableSmartLabels": "1",
-                        "manageLabelOverflow":"1",
-                        "skipOverlapLabels": "1",
-                        "placeValuesInside":"1",
-                        "decimals": "1",
-                        "useDataPlotColorForLabels": "1",
-                        "showValues":"0",
-                        //Theme
-                        "theme": "fint"
-                    },
-                    "data": data.beneficiary
-                };
+                        var fusioncharts = new FusionCharts({
+                            type: 'pie2d',
+                            renderAt: 'tipo_benef_chart',
+                            width: '450',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'pie2d',
-                    renderAt: 'tipo_benef_chart',
-                    width: '400',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart impact on PD lines
+                    FusionCharts.ready(function(){
+                        var newdata= {
+                            "chart": {
+                                "caption": "Tipos de beneficiarios",
+                                "enableSmartLabels": "1",
+                                "manageLabelOverflow":"1",
+                                "skipOverlapLabels": "1",
+                                "placeValuesInside":"1",
+                                "decimals": "1",
+                                "useDataPlotColorForLabels": "1",
+                                "showValues":"0",
+                                //Theme
+                                "theme": "fint"
+                            },
+                            "data": data.beneficiary
+                        };
 
-            //Chart impact on PD lines
-            FusionCharts.ready(function(){
-                var newdata = {
-                    "chart": {
-                        "caption": "Impacto en las líneas del PD",
-                        "captionFontSize": "14",
-                        "subcaptionFontSize": "14",
-                        "baseFontColor": "#333333",
-                        "baseFont": "Helvetica Neue,Arial",
-                        "subcaptionFontBold": "0",
-                        "paletteColors": "#008ee4,#6baa01",
-                        "bgColor": "#ffffff",
-                        "radarfillcolor": "#ffffff",
-                        "showBorder": "0",
-                        "showShadow": "0",
-                        "showCanvasBorder": "0",
-                        "legendBorderAlpha": "0",
-                        "legendShadow": "0",
-                        "divLineAlpha": "10",
-                        "usePlotGradientColor": "0",
-                    },
-                    "categories": data.lineas_pd.categories,
-                    "dataset": data.lineas_pd.dataset
-                    }
+                        var fusioncharts = new FusionCharts({
+                            type: 'pie2d',
+                            renderAt: 'tipo_benef_chart',
+                            width: '400',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
 
-                var fusioncharts = new FusionCharts({
-                    type: 'radar',
-                    renderAt: 'lineaspd_chart',
-                    width: '100%',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: newdata,
-                });
-                fusioncharts.render();
-            });
+                    //Chart impact on PD lines
+                    FusionCharts.ready(function(){
+                        var newdata = {
+                            "chart": {
+                                "caption": "Impacto en las líneas del PD",
+                                "captionFontSize": "14",
+                                "subcaptionFontSize": "14",
+                                "baseFontColor": "#333333",
+                                "baseFont": "Helvetica Neue,Arial",
+                                "subcaptionFontBold": "0",
+                                "paletteColors": "#008ee4,#6baa01",
+                                "bgColor": "#ffffff",
+                                "radarfillcolor": "#ffffff",
+                                "showBorder": "0",
+                                "showShadow": "0",
+                                "showCanvasBorder": "0",
+                                "legendBorderAlpha": "0",
+                                "legendShadow": "0",
+                                "divLineAlpha": "10",
+                                "usePlotGradientColor": "0",
+                            },
+                            "categories": data.lineas_pd.categories,
+                            "dataset": data.lineas_pd.dataset
+                            }
 
-        },
-        error: function(data){
-            console.log("error")
-            console.log(error_data)
+                        var fusioncharts = new FusionCharts({
+                            type: 'radar',
+                            renderAt: 'lineaspd_chart',
+                            width: '100%',
+                            height: '300',
+                            dataFormat: 'json',
+                            dataSource: newdata,
+                        });
+                        fusioncharts.render();
+                    });
+
+                },
+                error: function(data){
+                    console.log("error")
+                    console.log(error_data)
+                }
+            })
         }
-    })
-    })
+
+    $.when(data_ajax()).done(function() {
+        $('#loading').hide();
+    });
 
 </script>
 
@@ -257,6 +277,8 @@ hr {
 
 {% block body %}
 
+
+<div id="loading"></div>
 <div class="container">
     <div class="row">
         <div class="col-sm-3" align="center">

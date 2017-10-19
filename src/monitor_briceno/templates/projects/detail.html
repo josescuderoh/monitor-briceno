@@ -5,10 +5,6 @@
 
 <style>
 
-html,body {
-    height: 100%;
-}
-
 .items-list {
     list-style-type: none;
 }
@@ -18,7 +14,6 @@ html,body {
     display: block;
     text-align: center;
 }
-
 
 .no-beneficiary{
     font-size: 50px;
@@ -31,8 +26,6 @@ html,body {
 div.gridcontainer
 {
     line-height: 0;
-    margin-top: 5px;
-    margin-bottom: 15px;
     border-radius: 5px;
 }
 
@@ -49,13 +42,12 @@ div.griditem
 
 #page{
     border: 1px solid #CCCCCC;
-    margin-bottom: 60px;
     border-radius: 10px;
 }
 
 .section {
     height: 100%;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 </style>
@@ -124,7 +116,7 @@ FusionCharts.ready(function () {
 {% block body %}
 
 <!-- Page Content -->
-<br>
+<div class="main-container">
 <div class="container" id="page">
 
     <div class="row section">
@@ -143,9 +135,9 @@ FusionCharts.ready(function () {
                 <li class="col-xs-6 col-lg-4 items-list-item">
                     Tipo de beneficiarios<br>
                     {% if project.beneficiary == "Individuos" %}
-                    <i class="fa fa-users fa-4x" aria-hidden="true" title="Individupos"></i><br>
+                    <i class="fa fa-user fa-4x" aria-hidden="true" title="Individupos"></i><br>
                     {% elif project.beneficiary == "Familias" %}
-                    <i class="fa fa-user fa-4x" aria-hidden="true" title="Familias"></i><br>
+                    <i class="fa fa-home fa-4x" aria-hidden="true" title="Familias"></i><br>
                     {% else %}
                     <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i>
                     {% endif %}
@@ -176,8 +168,6 @@ FusionCharts.ready(function () {
             <div id="chart-container"></div>
         </div>
     </div>
-
-    <br>
     <div class="row section">
           <div class="container col-lg-12">
             <h4><strong>Actividades programadas</strong></h4>
@@ -216,6 +206,7 @@ FusionCharts.ready(function () {
       </div>
     </div> -->
 
+ </div>
  </div>
 
 <script>
