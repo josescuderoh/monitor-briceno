@@ -107,12 +107,7 @@ body{
     border-radius: 0;
     font-family: 'Open Sans', sans-serif;
     z-index: 70;
-    border: solid 1px #fff;
-}
-
-.navbar-default {
-    margin: 0;
-    color: black;
+    border: 0;
 }
 
 .navbar-default .navbar-brand{
@@ -130,7 +125,6 @@ body{
 
 .nav.navbar-text.navbar-right{
     color: #fff;
-    padding:
 }
 
 .navbar-text.navbar-center{
@@ -161,6 +155,7 @@ body{
 .fade-carousel {
     position: relative;
     height: calc(100vh - 100px);
+    border: solid 1px #fff;
 }
 
 .fade-carousel .carousel-inner .item {
