@@ -8,6 +8,7 @@
 
 <div class="main-container">
 <div class="container form-container">
+    {% if not project.closed or user.is_superuser %}
     <div class="col-sm-12 col-lg-12">
         <h3>Editar proyecto</h3>
         <br>
@@ -22,18 +23,18 @@
                 <h3>Galería del proyecto</h3>
                 <br>
                 {% if project.images.all %}
-                    <div class="list-group">
-                        <div class="row">
-                            {% for picture in project.images.all %}
-                            <div class="col-sm-6 col-md-4 col-lg-3" style="padding-bottom: 15px;">
-                                <a href="{{picture.image.url}}">
-                                <img class="card-img-top img-fluid img-responsive thumbnail"
-                                    src="{{picture.image.url}}"
-                                    title="{{picture.comments}}">
-                                </a>
-                            </div>
-                            {% endfor %}
+                <div class="list-group">
+                    <div class="row">
+                        {% for picture in project.images.all %}
+                        <div class="col-sm-6 col-md-4 col-lg-3" style="padding-bottom: 15px;">
+                            <a href="{{picture.image.url}}">
+                            <img class="card-img-top img-fluid img-responsive thumbnail"
+                                src="{{picture.image.url}}"
+                                title="{{picture.comments}}">
+                            </a>
                         </div>
+                        {% endfor %}
+                    </div>
                     {% else %}
                     <h4 style="padding-bottom: 15px;">No hay imágenes para mostrar</h4>
                     {% endif %}
@@ -47,6 +48,9 @@
             </div>
         </form>
     </div>
+    {% else %}
+    El proyecto ya está cerrado. Usted no tiene permisos de edición.
+    {% endif %}
 </div>
 </div>
 

@@ -44,6 +44,8 @@ body{
     text-align: center;
 }
 
+/*Projects*/
+
 #user_logo{
     max-width: 200px;
     max-height: 200px;
@@ -85,12 +87,6 @@ body{
 
 #idx_title{
     line-height: 9vh;
-}
-
-/*Projects*/
-
-#project_each.True .thumbnail {
-    pointer-events: none;
 }
 
 /* navbar */

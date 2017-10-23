@@ -23,7 +23,7 @@ def register(request):
         return render(request, 'entities/already_logged_in.html')
     # If method is post
     elif request.method == "POST":
-        user_form = UserProfileForm(data=request.POST)
+        user_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid():
             # Store extra information

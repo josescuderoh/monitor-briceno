@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import redirect
 from entities.models import UserProfile
 from collections import defaultdict, Counter
+from django.core.exceptions import PermissionDenied
 from datetime import date
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
@@ -139,13 +140,17 @@ class ProjectUpdate(generic.UpdateView):
     success_url = reverse_lazy('projects:projects-list')
 
     def get_context_data(self, **kwargs):
-        self.object = self.get_object()
-        context = super(ProjectUpdate, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['task_formset'] = TaskFormSet(self.request.POST, instance=self.object)
+        user = UserProfile.objects.get(pk=self.object.created_by.pk)
+        if (self.request.user.is_authenticated() and self.request.user.id == user.id) or self.request.user.is_superuser:
+            self.object = self.get_object()
+            context = super(ProjectUpdate, self).get_context_data(**kwargs)
+            if self.request.POST:
+                context['task_formset'] = TaskFormSet(self.request.POST, instance=self.object)
+            else:
+                context['task_formset'] = TaskFormSetUpdate(instance=self.object)
+            return context
         else:
-            context['task_formset'] = TaskFormSetUpdate(instance=self.object)
-        return context
+            raise PermissionDenied
 
     def form_valid(self, form):
         context = self.get_context_data()

@@ -138,16 +138,16 @@ class ProjectTask(models.Model):
 
 # Image class
 def upload_location(instance, filename):
-    return 'project_img/%s/%s' % (instance.project.id, filename)
+    return 'project_img/%s/%s_%s_%s' % (instance.project.id, str(date.today()), instance.comments, filename)
 
 
 class ProjectImage(models.Model):
     """Images tied to a project"""
     project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=upload_location,
+    image = models.ImageField(verbose_name="Imagen", upload_to=upload_location,
                               null=True,
                               blank=True)
-    comments = models.CharField(verbose_name="Título", max_length=25, blank=True, null=True)
+    comments = models.CharField(verbose_name="Título", max_length=20, blank=True, null=True)
     # Control de cambios
     added = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
