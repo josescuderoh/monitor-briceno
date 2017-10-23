@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_bootstrap_dynamic_formsets',
     'djcelery',
     'rest_framework',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -177,3 +178,9 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 18,
     'RESET_VIEW': False
 }
+
+# Storages in S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = 'AKIAILEX5VMKKI6AGBLQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'fip-monitor-bucket'

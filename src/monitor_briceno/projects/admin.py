@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Veredas, Project, ProjectTask
+from .models import Veredas, Project, ProjectTask, ProjectImage
 from leaflet.admin import LeafletGeoAdmin
 
 
@@ -8,8 +8,13 @@ class ProjectTaskInline(admin.StackedInline):
     extra = 0
 
 
+class ProjectImageInline(admin.StackedInline):
+    model = ProjectImage
+    extra = 0
+
+
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ProjectTaskInline, ]
+    inlines = [ProjectTaskInline, ProjectImageInline, ]
     list_display = ('name', 'created_by')
 
 
@@ -20,3 +25,4 @@ class VeredasAdmin(LeafletGeoAdmin):
 admin.site.register(Veredas, VeredasAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectTask)
+admin.site.register(ProjectImage)

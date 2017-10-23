@@ -118,7 +118,7 @@ class Project(models.Model):
 class ProjectTask(models.Model):
     """Tasks or activities defined inside each project"""
     # ID del proyecto
-    project = models.ForeignKey(Project, related_name="tasks")
+    project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
     # Tarea
     task = models.CharField(verbose_name="Actividad", max_length=50)
     # Nivel de ejecución
@@ -134,3 +134,24 @@ class ProjectTask(models.Model):
     class Meta:
         verbose_name = "Tarea del proyecto"
         verbose_name_plural = "Tareas"
+
+
+# Image class
+def upload_location(instance, filename):
+    return 'project_img/%s/%s' % (instance.project.id, filename)
+
+
+class ProjectImage(models.Model):
+    """Images tied to a project"""
+    project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=upload_location,
+                              null=True,
+                              blank=True)
+    comments = models.CharField(verbose_name="Título", max_length=25, blank=True, null=True)
+    # Control de cambios
+    added = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Imagen"
+        verbose_name_plural = "Imágenes"

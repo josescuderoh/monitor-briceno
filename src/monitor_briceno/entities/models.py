@@ -39,9 +39,12 @@ class UserProfileManager(BaseUserManager):
 
 
 # Modified user model for profiles
+def upload_location(instance, filename):
+    return 'profile_img/%s_%s' % (instance.id, filename)
+
+
 class UserProfile(AbstractUser, PermissionsMixin):
     """User model."""
-
     email = models.EmailField(max_length=255, unique=True, help_text="Preferiblemente correo institucional.")
     username = None
     first_name = models.CharField(max_length=255, verbose_name="Nombres")
@@ -52,6 +55,9 @@ class UserProfile(AbstractUser, PermissionsMixin):
     position = models.CharField(max_length=50, verbose_name="Cargo en la organización")
     phone = models.CharField(max_length=10, verbose_name="Teléfono")
     organization = models.CharField(max_length=50, verbose_name="Nombre de la organización")
+    organization_logo = models.ImageField(upload_to=upload_location,
+                                          null=True,
+                                          blank=True)
     address = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dirección (en territorio)")
     added = models.DateTimeField(auto_now_add=True)
     last_activity = models.DateTimeField(blank=True, null=True)

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.utils import timezone
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import redirect
 from entities.models import UserProfile
 from collections import defaultdict, Counter
 from datetime import date
 from .models import Project, ProjectTask, Veredas
-from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate
+from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
 
 from .geojson_serializer import Serializer
 from rest_framework.views import APIView
@@ -105,10 +105,12 @@ class ProjectCreate(generic.CreateView):
             # Assign values
             context = super(ProjectCreate, self).get_context_data(**kwargs)
             if self.request.POST:
-                context['task_formset'] = TaskFormSet(self.request.POST)
+                context['task_formset'] = TaskFormSet(self.request.POST,
+                                                      instance=self.object,
+                                                      prefix='tasks')
                 context['user'] = self.request.user
             else:
-                context['task_formset'] = TaskFormSet()
+                context['task_formset'] = TaskFormSet(prefix='tasks')
             return context
 
     def form_valid(self, form):
@@ -118,9 +120,11 @@ class ProjectCreate(generic.CreateView):
         form.instance.created_by = context['user']
         # Get formset
         formset = context['task_formset']
+        # img_formset = context['image_formset']
         if formset.is_valid() and form.is_valid():
             self.object = form.save()
             formset.instance = self.object
+            # img_formset.instance = self.object
             formset.save()
             return redirect(self.success_url)
         else:
@@ -130,6 +134,7 @@ class ProjectCreate(generic.CreateView):
 class ProjectUpdate(generic.UpdateView):
     """View used to update the project fields and tasks"""
     model = Project
+    template_name = 'projects/project_update_form.html'
     form_class = UpdateProjectForm
     success_url = reverse_lazy('projects:projects-list')
 
@@ -137,7 +142,7 @@ class ProjectUpdate(generic.UpdateView):
         self.object = self.get_object()
         context = super(ProjectUpdate, self).get_context_data(**kwargs)
         if self.request.POST:
-            context['task_formset'] = TaskFormSetUpdate(self.request.POST, instance=self.object)
+            context['task_formset'] = TaskFormSet(self.request.POST, instance=self.object)
         else:
             context['task_formset'] = TaskFormSetUpdate(instance=self.object)
         return context
@@ -150,6 +155,35 @@ class ProjectUpdate(generic.UpdateView):
             formset.instance = self.object
             formset.save()
             return redirect(self.success_url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class ProjectAddImage(generic.UpdateView):
+    """View used to add new images to the the project"""
+    model = Project
+    form_class = UpdateProjectForm
+    template_name = 'projects/add_images.html'
+
+    def get_context_data(self, **kwargs):
+        self.object = self.get_object()
+        context = super(ProjectAddImage, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['image_formset'] = ImageFormSetUpdate(self.request.POST,
+                                                          self.request.FILES,
+                                                          instance=self.object)
+        else:
+            context['image_formset'] = ImageFormSetUpdate()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        img_formset = context['image_formset']
+        if img_formset.is_valid() and form.is_valid():
+            self.object = form.save()
+            img_formset.instance = self.object
+            img_formset.save()
+            return HttpResponseRedirect(reverse('projects:project-update', kwargs={'pk': self.object.pk}))
         else:
             return self.render_to_response(self.get_context_data(form=form))
 

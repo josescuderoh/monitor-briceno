@@ -18,7 +18,7 @@ class UserProfileForm(UserCreationForm):
     class Meta:
         model = UserProfile
         fields = ('email', 'password1', 'password2', 'first_name', 'last_name',
-                  'position', 'phone', 'organization', 'address')
+                  'position', 'phone', 'organization', 'organization_logo', 'address')
 
 
 class UserProfileFormUpdate(forms.ModelForm):
@@ -26,7 +26,7 @@ class UserProfileFormUpdate(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('email', 'first_name', 'last_name', 'position',
-                  'phone', 'organization', 'address')
+                  'phone', 'organization', 'organization_logo', 'address')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileFormUpdate, self).__init__(*args, **kwargs)

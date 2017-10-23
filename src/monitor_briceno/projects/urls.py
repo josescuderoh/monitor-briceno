@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^add/$', views.ProjectCreate.as_view(), name='project-add'),
     # Update project url
     url(r'^(?P<pk>[0-9]+)/edit/$', views.ProjectUpdate.as_view(), name='project-update'),
+    # Add images using formset url
+    url(r'^(?P<pk>[0-9]+)/add-images/$', views.ProjectAddImage.as_view(), name='project-images'),
 ]

@@ -1,6 +1,7 @@
 amqp==1.4.9
 anyjson==0.3.3
 billiard==3.3.0.23
+boto==2.48.0
 celery==3.1.25
 Django==1.11.4
 django-bootstrap-dynamic-formsets==0.5.0
@@ -10,11 +11,14 @@ django-dynamic-formsets==0.0.8
 django-geojson==2.10.0
 django-leaflet==0.22.0
 django-simple-email-confirmation==0.22
+django-storages==1.6.5
 djangorestframework==3.6.3
 gunicorn==19.7.1
 kombu==3.0.37
 numpy
+olefile==0.44
 pandas==0.18.1
+Pillow==4.3.0
 psycopg2==2.7.1
 python-dateutil==2.6.1
 pytz==2017.2

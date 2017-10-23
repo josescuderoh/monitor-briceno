@@ -1,13 +1,7 @@
 {% extends 'projects/base.html' %}
-{{ task_formset.management_form }}
 {% load bootstrap3 %}
 {% load bootstrap_dynamic_formsets %}
 {% block title %}Agregar Nuevo Proyecto{% endblock %}
-
-{% block extrahead %}
-
-{% endblock %}
-
 
 {% load static %}
 {% block body %}
@@ -21,8 +15,7 @@
             <div class="form-group col-sm-12">
                 {% bootstrap_form form layout='horizontal' size='small'%}&nbsp;
                 <h3>Agregar actividades del proyecto</h3>
-                <br>
-                {% bootstrap_dynamic_formset task_formset layout='horizontal'%}
+                {% bootstrap_dynamic_formset task_formset layout='horizontal'%}&nbsp;
             </div>
             <div class="form-group">
                 <div class="col-sm-12" align="center">

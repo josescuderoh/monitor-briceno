@@ -10,6 +10,12 @@
     <div class="col-sm-12" align="center" id="projects_title">
         {% if request.user.is_superuser %}
         <h2>Listado general de proyectos </h2>
+        {% if user.organization_logo %}
+        <div class="container">
+            <img id="user_logo" src="{{user.organization_logo.url}}" class="img-responsive" title="{{user.organization}}" width="200" height="100">
+            <h4>{{user.organization}}</h4>
+        </div>
+        {% endif %}
         {% else %}
         <h2>Listado de proyectos de la organización </h2>
         {% endif %}

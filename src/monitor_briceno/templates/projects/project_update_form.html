@@ -1,0 +1,53 @@
+{% extends 'projects/base.html' %}
+{% load bootstrap3 %}
+{% load bootstrap_dynamic_formsets %}
+{% block title %}Editar Proyecto{% endblock %}
+
+{% load static %}
+{% block body %}
+
+<div class="main-container">
+<div class="container form-container">
+    <div class="col-sm-12 col-lg-12">
+        <h3>Editar proyecto</h3>
+        <br>
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-group col-sm-12">
+                {% bootstrap_form form layout='horizontal' size='small'%}&nbsp;
+                <h3>Actividades del proyecto</h3>
+                <br>
+                {% bootstrap_dynamic_formset task_formset layout='horizontal'%}&nbsp;
+            </div>
+            <div class="col-sm-12" align="center">
+                <h3>Galería del proyecto</h3>
+                <br>
+                {% if project.images.all %}
+                    <div class="list-group">
+                        <div class="row">
+                            {% for picture in project.images.all %}
+                            <div class="col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 15px;">
+                                <a href="{{picture.image.url}}">
+                                <img class="card-img-top img-fluid img-responsive thumbnail"
+                                    src="{{picture.image.url}}"
+                                    title="{{picture.comments}}">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    <h4 style="padding-bottom: 15px;">No hay imágenes para mostrar</h4>
+                    {% endif %}
+                    <div class="row" style="padding-bottom: 15px;">
+                        <a class="btn btn-primary" role="button" href="{% url 'projects:project-images' project.id %}">+</a>
+                    </div>
+                    </div>
+            </div>
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}

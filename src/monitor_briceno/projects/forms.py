@@ -2,7 +2,7 @@
 
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
-from .models import Project, ProjectTask
+from .models import Project, ProjectTask, ProjectImage
 from django.forms.widgets import DateInput
 from django import forms
 
@@ -67,8 +67,20 @@ class UpdateTaskForm(ModelForm):
         super(UpdateTaskForm, self).__init__(*args, **kwargs)
         self.fields['task'].widget.attrs['readonly'] = True
 
-
 TaskFormSetUpdate = inlineformset_factory(Project, ProjectTask,
                                           extra=0, fields='__all__',
                                           can_delete=False, max_num=3,
                                           form=UpdateTaskForm)
+
+
+class UpdateImageForm(ModelForm):
+    """Form used when images of an existing project are to be added"""
+    class Meta:
+        model = ProjectImage
+        fields = '__all__'
+
+
+ImageFormSetUpdate = inlineformset_factory(Project, ProjectImage,
+                                           extra=1, fields='__all__',
+                                           can_delete=False, max_num=10,
+                                           form=UpdateImageForm)
