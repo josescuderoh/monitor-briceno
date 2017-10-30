@@ -30,7 +30,7 @@
                     <div class="caption">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h3>Nombre: <a href="{% url 'projects:detail' project.id %}">{{ project.name }}</a></h3>
+                                <h3 title="{{ project.name }}" class="project-name">Nombre: <a href="{% url 'projects:detail' project.id %}">{{ project.name }}</a></h3>
                             </div>
                             <div class="col-sm-3 vcenter" align="center" id="status_box">
                                 {% if project.status == 2 or project.closed%}
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         {% if request.user.is_superuser %}
-                        <h4>Creado por: {{ project.created_by.organization }}</h4>
+                        <h4>Entidad: {{ project.created_by.organization }}</h4>
                         {% endif %}
                         {% language 'es' %}
                         <h5 class="date">Fecha de inicio: {{ project.start_date|date:'D, d N' }}</h5>

@@ -17,7 +17,12 @@ Vagrant.configure("2") do |config|
   #     vb.gui = true
   # end
 
-  config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 8080, host: 8080
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 4096
+    v.cpus = 4
+  end
+
+  config.vm.network "forwarded_port", host_ip: "172.16.2.54", guest: 8080, host: 8080
 
 
   config.vm.provision "shell", inline: <<-SHELL

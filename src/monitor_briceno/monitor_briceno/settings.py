@@ -27,7 +27,7 @@ SECRET_KEY = '-rf+_if5gd!-o%tuorjcb-#s#vy#jr%0jiyk&=6oz%iztgw=(2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'ec2-18-221-237-40.us-east-2.compute.amazonaws.com', u'localhost']
+ALLOWED_HOSTS = [u'ec2-18-221-237-40.us-east-2.compute.amazonaws.com', u'localhost', u'127.0.0.1', u'172.16.2.54']
 # ALLOWED_HOSTS = []
 
 
@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'monitor_briceno',
-        'USER': 'fipmaster',
-        'PASSWORD': 'viejopapo08*',
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
         'HOST': 'fip-psql-instance.cxrb2g5bwzb0.us-east-2.rds.amazonaws.com',
         'PORT': '5432',
     }
@@ -149,8 +149,8 @@ LOGIN_REDIRECT_URL = '/projects/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'noreply@ideaspaz.org'
-EMAIL_HOST_PASSWORD = 'viejopapo08*'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = "Monitor Briceño <noreply@ideaspaz.org>"
 
@@ -179,8 +179,8 @@ LEAFLET_CONFIG = {
     'RESET_VIEW': False
 }
 
-# Storages in S3
+# # Storages in S3
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_ACCESS_KEY_ID = 'AKIAIZ5E7XVLKRL2EAOQ'
-AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'fip-monitor-bucket'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
