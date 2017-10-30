@@ -16,6 +16,7 @@ cd $DJANGODIR
 source /usr/local/virtualenvs/monitor_venv/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+source /home/ubuntu/credentials/cred.bash
 
 # Create the run directory if it doesn't exist
 RUNDIR=$(dirname $SOCKFILE)
