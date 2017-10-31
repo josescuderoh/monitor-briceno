@@ -21,7 +21,9 @@ class CreateProjectForm(ModelForm):
             'start_date': DateInput(attrs={'type': 'date',
                                            'placeholder': 'dd/mm/aaaa'}),
             'end_date': DateInput(attrs={'type': 'date',
-                                         'placeholder': 'dd/mm/aaaa'})
+                                         'placeholder': 'dd/mm/aaaa'}),
+            'main_goal': forms.Textarea(attrs={'rows': 3}),
+            'beneficiary_comments': forms.Textarea(attrs={'rows': 2}),
         }
 
 
@@ -34,7 +36,7 @@ class CreateTaskForm(ModelForm):
 
 TaskFormSet = inlineformset_factory(Project, ProjectTask,
                                     extra=1, fields='__all__',
-                                    can_delete=False, max_num=3,
+                                    max_num=3, can_delete=False,
                                     form=CreateTaskForm)
 
 
@@ -42,7 +44,7 @@ class UpdateProjectForm(ModelForm):
     """Form used when an existing project is to be edited"""
 
     name = forms.CharField(disabled=True, label='Nombre del Proyecto')
-    main_goal = forms.CharField(disabled=True, label='Objetivo principal')
+    main_goal = forms.CharField(disabled=True, label='Objetivo principal', widget=forms.Textarea(attrs={'rows': 3}))
     beneficiary = forms.CharField(disabled=True, label='Beneficiarios')
     no_benef = forms.IntegerField(disabled=True, label='Número de Beneficiarios')
     start_date = forms.DateField(disabled=True, label='Fecha de inicio')
@@ -55,6 +57,9 @@ class UpdateProjectForm(ModelForm):
         model = Project
         fields = '__all__'
         exclude = ['created_by', 'coverage', 'closed']
+        widgets = {
+            'beneficiary_comments': forms.Textarea(attrs={'rows': 2}),
+        }
 
 
 class UpdateTaskForm(ModelForm):

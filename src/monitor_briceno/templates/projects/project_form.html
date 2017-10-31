@@ -3,7 +3,6 @@
 {% load bootstrap_dynamic_formsets %}
 {% block title %}Agregar Nuevo Proyecto{% endblock %}
 
-{% load static %}
 {% block body %}
 
 <div class="main-container">
@@ -15,7 +14,7 @@
             <div class="form-group col-sm-12">
                 {% bootstrap_form form layout='horizontal' size='small'%}&nbsp;
                 <h3>Agregar actividades del proyecto</h3>
-                {% bootstrap_dynamic_formset task_formset layout='horizontal'%}&nbsp;
+                {% bootstrap_dynamic_formset task_formset layout='inline'%}&nbsp;
             </div>
             <div class="form-group">
                 <div class="col-sm-12" align="center">
