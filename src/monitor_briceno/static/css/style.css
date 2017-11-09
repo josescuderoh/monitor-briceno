@@ -15,7 +15,7 @@ body{
 }
 
 .main-container {
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 95px);
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
@@ -100,6 +100,7 @@ body{
 /* navbar */
 
 .navbar{
+    min-height: 45px;
     position: relative;
     margin: 0;
     background-color: rgb(35, 45, 5);
@@ -128,7 +129,7 @@ body{
 
 .navbar-text.navbar-center{
     position: relative;
-    margin-top: 15px;
+    margin-top: 12px;
     margin-bottom: 0px;
     margin-right: 0;
     margin-left: 0;
@@ -148,12 +149,13 @@ body{
     color: #080d15;
 }
 
+
 /********************************/
 /*       Fade Bs-carousel       */
 /********************************/
 .fade-carousel {
     position: relative;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 95px);
     border: solid 1px #fff;
 }
 
