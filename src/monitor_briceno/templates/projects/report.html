@@ -50,7 +50,8 @@
                                 "decimals": "1",
                                 "useDataPlotColorForLabels": "1",
                                 //Theme
-                                "theme": "fint"
+                                "theme": "fint",
+                                "paletteColors" : "#F8605F, #F64141, #F40D0E, #F40303, #F6BDB6"
                             },
                             "data": data.representative
                         };
@@ -79,7 +80,8 @@
                                 "useDataPlotColorForLabels": "1",
                                 "showValues":"0",
                                 //Theme
-                                "theme": "fint"
+                                "theme": "fint",
+                                "paletteColors" : "#F8605F"
                             },
                             "data": data.statuses
                         };
@@ -108,7 +110,8 @@
                                 "useDataPlotColorForLabels": "1",
                                 "showValues":"0",
                                 //Theme
-                                "theme": "fint"
+                                "theme": "fint",
+                                "paletteColors" : "#F8605F"
                             },
                             "data": data.budget_per_organization
                         };
@@ -138,7 +141,8 @@
                                 "showValues":"0",
                                 //Theme
                                 "theme": "fint",
-                                "setAdaptiveYMin":"0"
+                                "setAdaptiveYMin":"0",
+                                "paletteColors" : "#F8605F"
                             },
                             "data": data.projects_per_organization
                         };
@@ -158,7 +162,7 @@
                     FusionCharts.ready(function(){
                         var newdata= {
                             "chart": {
-                                "caption": "Tipos de beneficiarios",
+                                "caption": "Tipos de destinatarios",
                                 "enableSmartLabels": "1",
                                 "manageLabelOverflow":"1",
                                 "skipOverlapLabels": "1",
@@ -167,36 +171,8 @@
                                 "useDataPlotColorForLabels": "1",
                                 "showValues":"0",
                                 //Theme
-                                "theme": "fint"
-                            },
-                            "data": data.beneficiary
-                        };
-
-                        var fusioncharts = new FusionCharts({
-                            type: 'pie2d',
-                            renderAt: 'tipo_benef_chart',
-                            width: '100%',
-                            height: '300',
-                            dataFormat: 'json',
-                            dataSource: newdata,
-                        });
-                        fusioncharts.render();
-                    });
-
-                    //Chart impact on PD lines
-                    FusionCharts.ready(function(){
-                        var newdata= {
-                            "chart": {
-                                "caption": "Tipos de beneficiarios",
-                                "enableSmartLabels": "1",
-                                "manageLabelOverflow":"1",
-                                "skipOverlapLabels": "1",
-                                "placeValuesInside":"1",
-                                "decimals": "1",
-                                "useDataPlotColorForLabels": "1",
-                                "showValues":"0",
-                                //Theme
-                                "theme": "fint"
+                                "theme": "fint",
+                                "paletteColors" : "#F8605F, #F64141, #F40D0E, #F40303, #F6BDB6  "
                             },
                             "data": data.beneficiary
                         };
@@ -232,6 +208,7 @@
                                 "legendShadow": "0",
                                 "divLineAlpha": "10",
                                 "usePlotGradientColor": "0",
+                                "paletteColors" : "#F8605F"
                             },
                             "categories": data.lineas_pd.categories,
                             "dataset": data.lineas_pd.dataset
@@ -295,11 +272,11 @@ hr {
             <img src="/static/images/logo.svg" width="150" height="150">
         </div>
     </div>
-    <hr>
+    <hr style="border-top: 3px solid rgba(244, 3, 3, 0.75);">
     <div class="row" align="center">
         <h2>Tablero de Seguimiento</h2>
     </div>
-    <hr>
+    <hr style="border-top: 3px solid rgba(244, 3, 3, 0.75);">
     <div class="row" align="center">
             <div class="col-sm-4">
                 <h3>Proyectos</h3>
@@ -314,7 +291,7 @@ hr {
                 <h3 id="veredas"></h3>
             </div>
     </div>
-    <hr>
+    <hr style="border-top: 3px solid rgba(244, 3, 3, 0.75);">
 </div>
 <div class="container">
     <div class="col-sm-6 col-md-4"  align="center" id="proj_org_chart"></div>

@@ -103,11 +103,13 @@ body{
     min-height: 45px;
     position: relative;
     margin: 0;
-    background-color: rgb(35, 45, 5);
+    background-color: rgba(244, 3, 3, 0.75);
+    /*background-color: rgb(35, 45, 5);*/
     border-radius: 0;
     font-family: 'Open Sans', sans-serif;
     z-index: 70;
     border: 0;
+    text-shadow: 1px 1px black;
 }
 
 .navbar-default .navbar-brand{

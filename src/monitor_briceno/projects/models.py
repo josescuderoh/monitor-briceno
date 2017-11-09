@@ -47,10 +47,10 @@ class Project(models.Model):
     BENEF_CHOICES = (("Individuos", "Individuos"),
                      ("Instituciones", "Instituciones"),
                      ("Familias", "Familias"))
-    beneficiary = models.CharField(verbose_name="Tipo de beneficiarios", choices=BENEF_CHOICES, max_length=30)
-    beneficiary_comments = models.TextField(verbose_name="Observaciones sobre los beneficiarios", blank=True, null=True)
+    beneficiary = models.CharField(verbose_name="Tipo de destinatario", choices=BENEF_CHOICES, max_length=30)
+    beneficiary_comments = models.TextField(verbose_name="Observaciones sobre los destinatarios", blank=True, null=True)
     # Cantidad de beneficiarios
-    no_benef = models.IntegerField(verbose_name="Número de beneficiarios")
+    no_benef = models.IntegerField(verbose_name="Número de destinatarios")
     # Fecha de inicio
     start_date = models.DateField(verbose_name="Fecha de inicio", help_text="Seleccionar en el calendario.")
     # Fecha de finalización
