@@ -31,22 +31,22 @@ def send_verification_email(user_id, domain):
         logging.warning("El usuario para confirmación no existe en la base de datos: '%s'" % user_id)
 
 
-@app.task()
-def check_infrequent_users():
-    try:
-        for user in get_user_model().objects.all():
-            last_activity = user.last_activity.date()
-            today = date.today()
-            # Get difference
-            delta = today - last_activity
-            # Check delta time
-            if delta.days >= 15 and not all(project.closed for project in Project.objects.filter(created_by=user)):
-                message = render_to_string('entities/activity_notif.html',
-                                           {'user': user.get_short_name(), })
-                mail_subject = 'Actualización de proyectos'
-                to_email = user.email
-                email = EmailMessage(mail_subject, message, to=[to_email])
-                email.send()
-                return("%s was notified" % user.email)
-    except:
-        return("Error was found")
+# @app.task()
+# def check_infrequent_users():
+#     try:
+#         for user in get_user_model().objects.all():
+#             last_activity = user.last_activity.date()
+#             today = date.today()
+#             # Get difference
+#             delta = today - last_activity
+#             # Check delta time
+#             if delta.days >= 15 and not all(project.closed for project in Project.objects.filter(created_by=user)):
+#                 message = render_to_string('entities/activity_notif.html',
+#                                            {'user': user.get_short_name(), })
+#                 mail_subject = 'Actualización de proyectos'
+#                 to_email = user.email
+#                 email = EmailMessage(mail_subject, message, to=[to_email])
+#                 email.send()
+#                 return("%s was notified" % user.email)
+#     except:
+#         return("Error was found")

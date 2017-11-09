@@ -50,7 +50,7 @@
                         <h5 class="date">Fecha de finalización: {{ project.end_date|date:'D, d N' }}</h5>
                         {% endlanguage %}
                         <!-- View Details -->
-                        <a href="{% url 'projects:detail' project.id %}" class="btn btn-primary btn-sm" role="button">Ver Detalles</a>
+                        <a href="{% url 'projects:detail' project.id %}" class="btn btn-primary btn-sm button-background" role="button">Ver Detalles</a>
                         <!--Update-->
                         {% if not project.closed or user.is_superuser %}
                         <form action="{% url 'projects:project-update' project.id %}" style="display: inline;">

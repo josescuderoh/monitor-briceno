@@ -2,52 +2,79 @@
 {% block title %}Inicio{% endblock %}
 {% load static %}
 
+{% block extrahead %}
+<!-- Custom CSS -->
+<link href="{% static 'css/landing-page.css'%}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static 'src/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+{%endblock%}
+
 {% block body %}
 
-<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="10000" id="bs-carousel">
+<!-- Header -->
+<a name="about"></a>
+<div class="intro-header">
+    <div class="intro-container container">
+        <div class="intro-message">
+            <h1>Bienvenido a Briceño</h1>
+            <h3>Plataforma de Integración de la Oferta de Cooperación</h3>
+        </div>
+    </div>
+</div>
+<!-- /.intro-header -->
 
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#bs-carousel" data-slide-to="1"></li>
-    <li data-target="#bs-carousel" data-slide-to="2"></li>
-  </ol>
+<!-- Page Content -->
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item slides active">
-      <div class="slide-1"></div>
-      <div class="hero">
-          <hgroup>
-              <h1>Bienvenido a Briceño</h1>
-              <h3>Esta es la página principal de Plataforma de Articulación de la Oferta Institucional de Cooperación del municipio de Briceño.
-                  Esta herramienta ha sido creada para hacer un seguimiento a los proyectos y actividades que se llevan a cabo en
-                  las diferentes veredas del municipio, y consiste en una herramienta para monitorear el estado
-                  de dichos proyectos por parte de la Oficina de Paz y de los habitantes Briceño.</h3>
-          </hgroup>
-      </div>
+<a  name="services"></a>
+<div class="content-section-a">
+
+    <div class="container" align="center">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Monitoreo a nivel veredal</h2>
+                <p class="lead">En la pestaña Mapas podrás conocer las veredas que han sido
+                    beneficiadas por los proyectos de cooperacione de las entidades
+                     inscritas en la plataforma. <br><br>
+                <a href="{% url 'projects:maps' %}">Ver mapas</a></p>
+                <hr class="section-heading-spacer">                
+            </div>
+            <div class="col-lg-6 col-sm-6">
+                <img class="img-responsive" src="{% static 'images/mapa.png'%}" alt="">
+            </div>
+        </div>
+
     </div>
-    <div class="item slides">
-      <div class="slide-2"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>Monitoreo a nivel veredal</h1>
-            <h3>Revisa el estado de los proyectos en ejecución en cualquier vereda del municipio.</h3>
-        </hgroup>
-        <a class="btn btn-hero btn-lg" role="button" href="{% url 'projects:maps' %}">Ir a mapas</a>
-      </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.content-section-a -->
+
+<div class="content-section-b">
+
+    <div class="container" align="center">
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">
+                <img class="img-responsive" src="{% static 'images/dashboard.jpg'%}" alt="">
+            </div>
+            <div class="col-lg-6 col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Tablero de reporte de proyectos</h2>
+                <p class="lead">Encuentra en el tablero de reporte las instituciones presentes en el territorio, y
+                    conoce cómo dichos proyectos impactan el Plan de Desarrollo del municipio.<br><br>
+                <a href="{% url 'projects:report' %}">Ver reporte</a></p>
+                <hr class="section-heading-spacer">
+            </div>
+        </div>
     </div>
-    <div class="item slides">
-      <div class="slide-3"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>Tablero de reporte</h1>
-            <h3>Encuentra en el tablero de reporte las instituciones en terreno, proyectos, objetivos, entre otros.</h3>
-        </hgroup>
-        <a class="btn btn-hero btn-lg" role="button" href="{% url 'projects:report' %}">Ver reporte</a>
-      </div>
-    </div>
-  </div>
+    <!-- /.container -->
+
 </div>
 
 {% endblock %}
