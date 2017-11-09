@@ -23,7 +23,7 @@ class CreateProjectForm(ModelForm):
             'end_date': DateInput(attrs={'type': 'date',
                                          'placeholder': 'dd/mm/aaaa'}),
             'main_goal': forms.Textarea(attrs={'rows': 3}),
-            'beneficiary_comments': forms.Textarea(attrs={'rows': 2}),
+            'beneficiary_comments': forms.Textarea(attrs={'rows': 4}),
         }
 
 
