@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import redirect
+from django.db.models import Sum
 from entities.models import UserProfile
 from collections import defaultdict, Counter
 from django.core.exceptions import PermissionDenied
@@ -269,7 +270,8 @@ class ReportData(APIView):
             'representative': [{'label': k, 'value': v} for k, v in representatives.items()],
             'beneficiary': [{'label': k, 'value': v} for k, v in beneficiary.items()],
             'statuses': [{'label': k, 'value': v} for k, v in statuses.items()],
-            'lineas_pd': {'categories': categories, 'dataset': dataset}
+            'lineas_pd': {'categories': categories, 'dataset': dataset},
+            'total_budget': Project.objects.aggregate(Sum('budget'))['budget__sum']
         }
 
         return Response(data)

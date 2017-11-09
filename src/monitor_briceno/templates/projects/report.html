@@ -38,6 +38,16 @@
                     document.getElementById("veredas").innerHTML = data.no_veredas.toString();
                     document.getElementById("projects").innerHTML = data.no_projects.toString();
                     document.getElementById("entities").innerHTML = data.no_entities.toString();
+                    // Format number
+                    function numberWithCommas(x) {
+                        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                    var val = parseInt(data.total_budget);
+                    val = numberWithCommas(val);
+
+                    var element = document.getElementById("budget");
+                    element.innerHTML = "$"+val;
+
                     // Chart for representatives
                     FusionCharts.ready(function(){
                         var newdata= {
@@ -241,6 +251,17 @@
 </script>
 
 <style>
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
 hr {
     display: block;
     border: 0;
@@ -248,11 +269,10 @@ hr {
     margin: 0 0;
     padding: 0px;
 }
-.container {
-    font-family: 'Open Sans', sans-serif;
-}
 
 </style>
+
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
 {% endblock %}
 
@@ -265,8 +285,8 @@ hr {
         <div class="col-sm-3" align="center">
             <img src="/static/images/escudo.svg" width="150" height="150">
         </div>
-        <div class="col-sm-6" align="center" id="report-title">
-            <h2>Plataforma de Articulación de la Oferta Institucional de Cooperación en Briceño</h2>
+        <div class="col-sm-6" align="center" id="report-title" style="padding-top: 3vh;">
+            <h1>Tablero de Seguimiento</h1>
         </div>
         <div class="col-sm-3" align="center">
             <img src="/static/images/logo.svg" width="150" height="150">
@@ -274,21 +294,21 @@ hr {
     </div>
     <hr style="border-top: 3px solid rgba(148, 0, 0, 1);">
     <div class="row" align="center">
-        <h2>Tablero de Seguimiento</h2>
-    </div>
-    <hr style="border-top: 3px solid rgba(148, 0, 0, 1);">
-    <div class="row" align="center">
-            <div class="col-sm-4">
-                <h3>Proyectos</h3>
+            <div class="col-sm-3">
+                <h3 >Proyectos</h3>
                 <h3 id="projects"></h3>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <h3>Entidades</h3>
                 <h3 id="entities"></h3>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <h3>Veredas cubiertas</h3>
                 <h3 id="veredas"></h3>
+            </div>
+            <div class="col-sm-3">
+                <h3>Inversión</h3>
+                <h3 class="investment" aria-hidden="true" id="budget"></h3>
             </div>
     </div>
     <hr style="border-top: 3px solid rgba(148, 0, 0, 1);">
@@ -301,4 +321,5 @@ hr {
     <div class="col-sm-12 col-md-6" align="center" id="tipo_benef_chart"></div>
     <div class="col-sm-12" align="center" id="lineaspd_chart"></div>
 </div>
+
 {% endblock %}
