@@ -10,6 +10,7 @@ echo "Starting celery..."
 # Activate the virtual environment.
 cd $VENVDIR
 . monitor_venv/bin/activate
+. /home/ubuntu/credentials/cred.bash
 
 # Programs meant to be run under supervisor should not daemonize themselves
 # (do not use --daemon).

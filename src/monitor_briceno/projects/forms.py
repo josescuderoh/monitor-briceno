@@ -46,12 +46,13 @@ class UpdateProjectForm(ModelForm):
     name = forms.CharField(disabled=True, label='Nombre del Proyecto')
     main_goal = forms.CharField(disabled=True, label='Objetivo principal', widget=forms.Textarea(attrs={'rows': 3}))
     beneficiary = forms.CharField(disabled=True, label='Beneficiarios')
-    no_benef = forms.IntegerField(disabled=True, label='Número de Beneficiarios')
+    no_benef = forms.IntegerField(disabled=True, label='Número de beneficiarios')
     start_date = forms.DateField(disabled=True, label='Fecha de inicio')
     end_date = forms.DateField(disabled=True, label='Fecha de finalización')
     budget = forms.IntegerField(disabled=True, label='Monto de ejecución')
     representative = forms.CharField(disabled=True, label='Interlocutor')
     lines_pd = forms.CharField(disabled=True, label='Líneas del plan que impactan')
+    donor = forms.CharField(disabled=True, label='Donante')
 
     class Meta:
         model = Project

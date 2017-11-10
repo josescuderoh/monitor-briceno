@@ -62,6 +62,7 @@ class Project(models.Model):
     budget = models.IntegerField(verbose_name="Monto de ejecución",
                                  help_text='Cifra en pesos colombianos',
                                  blank=True, null=True)
+    donor = models.CharField(verbose_name="Donante", max_length=30, blank=True, null=True)
     # Dependencia de la alcaldía
     MUN_CHOICES = (
         ("Ninguna", "Ninguna"),

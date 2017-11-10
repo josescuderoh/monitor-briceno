@@ -16,12 +16,13 @@
     text-align: center;
 }
 
-.no-beneficiary{
+.report-element{
     font-size: 50px;
 }
 
-.investment{
-    font-size: 50px;
+.small-report-element{
+    padding-top: 15px;
+    font-size: 25px;
 }
 
 div.gridcontainer
@@ -132,7 +133,7 @@ FusionCharts.ready(function () {
     <div class="row">
         <div class="col-xs-12 col-lg-12">
             <ul class="col-xs-12 col-lg-12 items-list">
-                <li class="col-xs-6 col-lg-4 items-list-item">
+                <li class="col-xs-6 col-lg-3 items-list-item">
                     Tipo de beneficiarios<br>
                     {% if project.beneficiary == "Individuos" %}
                     <i class="fa fa-user fa-4x" aria-hidden="true" title="Individupos"></i><br><h6>Individuos</h6>
@@ -142,13 +143,17 @@ FusionCharts.ready(function () {
                     <i class="fa fa-university fa-4x" aria-hidden="true" title="Instituciones"></i><h6>Instituciones</h6>
                     {% endif %}
                 </li>
-                <li class="col-xs-6 col-lg-4 items-list-item">
+                <li class="col-xs-6 col-lg-3 items-list-item">
                     Cantidad de beneficiarios
-                    <p class="no-beneficiary" aria-hidden="true">{{ project.no_benef }}</p>
+                    <p class="report-element" aria-hidden="true">{{ project.no_benef }}</p>
                 </li>
-                <li class="col-xs-12 col-lg-4 items-list-item">
+                <li class="col-xs-12 col-lg-3 items-list-item">
                     Inversión
-                    <p class="investment" aria-hidden="true" id="budget"></p>
+                    <p class="report-element" aria-hidden="true" id="budget"></p>
+                </li>
+                <li class="col-xs-12 col-lg-3 items-list-item">
+                    Donante
+                    <p class="small-report-element" aria-hidden="true">{% if project.donor %}{{ project.donor }}{% else %} Sin información{% endif %}</p>
                 </li>
             </ul>
             <div class="col-xs-12 col-lg-12">
