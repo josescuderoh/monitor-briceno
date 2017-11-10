@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Satisfy|Baloo+Bhaijaan|Open+Sans" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'src/font-awesome/css/font-awesome.min.css' %}"/>
 
     {% block extrahead %}{% endblock %}
 
@@ -58,6 +60,13 @@
                         {% endif %}
                     </p>
                 </li>
+                {% if user.is_superuser %}
+                <li class="{% if request.resolver_match.url_name == 'register' %}active{% else %}#{% endif %}">
+                    <a href="{% url 'entities:register' %}">
+                        <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
+                    </a>
+                </li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li class="{% if request.resolver_match.url_name == 'project-add' %}active{% else %}#{% endif %}">
                     <a href="{% url 'projects:project-add' %}">

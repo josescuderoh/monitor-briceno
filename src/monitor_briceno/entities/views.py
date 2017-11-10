@@ -17,38 +17,39 @@ from .tokens import account_activation_token
 def register(request):
     """This view is used to render the registration form and create the new user in the database."""
 
-    registered = False
-    # Check if is already logged in
-    if request.user.is_authenticated():
-        return render(request, 'entities/already_logged_in.html')
-    # If method is post
-    elif request.method == "POST":
-        user_form = UserProfileForm(request.POST, request.FILES)
+    if request.user.is_superuser:
+        registered = False
+        # If method is post
+        if request.method == "POST":
+            user_form = UserProfileForm(request.POST, request.FILES)
 
-        if user_form.is_valid():
-            # Store extra information
-            user = user_form.save(commit=False)
-            # Clean password
-            password1 = user_form.cleaned_data['password1']
-            user.set_password(password1)
-            # Inactive until email confirmation
-            user.is_active = False
-            user.save()
-            registered = True
+            if user_form.is_valid():
+                # Store extra information
+                user = user_form.save(commit=False)
+                # Clean password
+                password1 = user_form.cleaned_data['password1']
+                user.set_password(password1)
+                # Inactive until email confirmation
+                user.is_active = False
+                user.save()
+                registered = True
 
-            # Send verification email
-            site_domain = get_current_site(request).domain
-            send_verification_email.delay(user.pk, site_domain)
+                # Send verification email
+                site_domain = get_current_site(request).domain
+                send_verification_email.delay(user.pk, site_domain)
 
+            else:
+                print(user_form.errors)
+        # If method is get
         else:
-            print(user_form.errors)
-    # If method is get
-    else:
-        user_form = UserProfileForm()
+            data = {'password1': "654321+*", 'password2': "654321+*"}
+            user_form = UserProfileForm(initial=data)
 
-    return render(request, 'entities/registration_form.html',
-                  {'user_form': user_form,
-                   'registered': registered})
+        return render(request, 'entities/registration_form.html',
+                      {'user_form': user_form,
+                       'registered': registered})
+    else:
+        raise PermissionError
 
 
 def activate(request, uidb64, token):

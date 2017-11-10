@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import os
-from datetime import timedelta
+# from datetime import timedelta
 import django
 
 # set the default Django settings module for the 'celery' program.
@@ -16,11 +16,11 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 django.setup()
 
-app.conf.update(
-    CELERYBEAT_SCHEDULE={
-        'send-every-half-month': {
-            'task': 'entities.tasks.check_infrequent_users',
-            'schedule': timedelta(days=15),
-        },
-    }
-)
+# app.conf.update(
+#     CELERYBEAT_SCHEDULE={
+#         'send-every-half-month': {
+#             'task': 'entities.tasks.check_infrequent_users',
+#             'schedule': timedelta(days=15),
+#         },
+#     }
+# )

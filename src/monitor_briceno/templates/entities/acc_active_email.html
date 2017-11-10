@@ -1,8 +1,12 @@
 {% autoescape off %}
-Para activar la cuenta {{ user.email }}, de la plataforma de Integración de Cooperación haga click en el siguiente link:
+
+Su cuenta ha sido autorizada y creada en la Plataforma de Integración de Cooperación. Para activar la cuenta haga click en el siguiente link:
 
 http://{{ domain }}{% url 'entities:activate' uidb64=uid token=token %}
 
-Si el enlace anterior no funciona, por favor copie y pegue la URL en una nueva ventana de su navegador.
+Usuario: {{ user.username }}
+Contraseña: 654321+*
+
+Por la seguridad de su información recomendamos cambiar la contraseña cuanto antes haciendo uso del link ¿Olvidó su contraseña? Si el enlace anterior no funciona, por favor copie y pegue la URL en una nueva ventana de su navegador.
 
 {% endautoescape %}
