@@ -8,48 +8,48 @@ from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from rolepermissions.roles import assign_role
+from rolepermissions.decorators import has_permission_decorator
 from .forms import UserProfileForm, UserProfileFormUpdate
 from .models import UserProfile
 from .tasks import send_verification_email
 from .tokens import account_activation_token
 
 
+@has_permission_decorator('create_users')
 def register(request):
     """This view is used to render the registration form and create the new user in the database."""
 
-    if request.user.is_superuser:
-        registered = False
-        # If method is post
-        if request.method == "POST":
-            user_form = UserProfileForm(request.POST, request.FILES)
+    registered = False
+    # If method is post
+    if request.method == "POST":
+        user_form = UserProfileForm(request.POST, request.FILES)
 
-            if user_form.is_valid():
-                # Store extra information
-                user = user_form.save(commit=False)
-                # Clean password
-                password1 = user_form.cleaned_data['password1']
-                user.set_password(password1)
-                # Inactive until email confirmation
-                user.is_active = False
-                user.save()
-                registered = True
+        if user_form.is_valid():
+            # Store extra information
+            user = user_form.save(commit=False)
+            # Clean password
+            password1 = user_form.cleaned_data['password1']
+            user.set_password(password1)
+            # Inactive until email confirmation
+            user.is_active = False
+            user.save()
+            registered = True
+            assign_role(user, user.role)
+            # Send verification email
+            site_domain = get_current_site(request).domain
+            send_verification_email.delay(user.pk, site_domain)
 
-                # Send verification email
-                site_domain = get_current_site(request).domain
-                send_verification_email.delay(user.pk, site_domain)
-
-            else:
-                print(user_form.errors)
-        # If method is get
         else:
-            data = {'password1': "654321+*", 'password2': "654321+*"}
-            user_form = UserProfileForm(initial=data)
-
-        return render(request, 'entities/registration_form.html',
-                      {'user_form': user_form,
-                       'registered': registered})
+            print(user_form.errors)
+    # If method is get
     else:
-        raise PermissionError
+        data = {'password1': "654321+*", 'password2': "654321+*"}
+        user_form = UserProfileForm(initial=data)
+
+    return render(request, 'entities/registration_form.html',
+                  {'user_form': user_form,
+                   'registered': registered})
 
 
 def activate(request, uidb64, token):

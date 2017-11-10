@@ -63,6 +63,9 @@ class UserProfile(AbstractUser, PermissionsMixin):
     added = models.DateTimeField(auto_now_add=True)
     last_activity = models.DateTimeField(blank=True, null=True)
     login_count = models.IntegerField(default=0)
+    ROLE_CHOICES = (("entidad", "Entidad"),
+                    ("consulta", "Consulta"))
+    role = models.CharField(max_length=10, verbose_name="Rol", choices=ROLE_CHOICES)
 
     objects = UserProfileManager()
 

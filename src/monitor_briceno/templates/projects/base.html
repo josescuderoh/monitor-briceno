@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Briceño{% endblock %}</title>
     {% load static %}
+    {% load permission_tags %}
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Satisfy|Baloo+Bhaijaan|Open+Sans" rel="stylesheet" type="text/css">
@@ -42,7 +43,7 @@
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp; Reporte
                     </a>
                 </li>
-                {% if user.is_authenticated %}
+                {% if user|can:'view_projects' %}
                 <li class="{% if request.resolver_match.url_name == 'projects-list' %}active{% else %}#{% endif %}">
                     <a href="{% url 'projects:projects-list' %}">
                         <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; Proyectos
@@ -54,20 +55,20 @@
                 <li class="" style="padding-left: 15px; padding-right: 15px;">
                     <p class="nav navbar-text navbar-right">
                         {% if user.is_authenticated %}
-                        Bienvenido, <a href="{% url 'entities:profile-update' user.id%}">{{ user.get_short_name }}</a>&nbsp;&nbsp;&nbsp;
+                        Bienvenido(a), <a href="{% url 'entities:profile-update' user.id%}">{{ user.get_short_name }}</a>&nbsp;&nbsp;&nbsp;
                         {% else %}
                         Bienvenido, Invitado&nbsp;
                         {% endif %}
                     </p>
                 </li>
-                {% if user.is_superuser %}
+                {% if user|can:'create_users' %}
                 <li class="{% if request.resolver_match.url_name == 'register' %}active{% else %}#{% endif %}">
                     <a href="{% url 'entities:register' %}">
                         <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
                     </a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated %}
+                {% if user|can:'create_projects' %}
                 <li class="{% if request.resolver_match.url_name == 'project-add' %}active{% else %}#{% endif %}">
                     <a href="{% url 'projects:project-add' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Agregar un Proyecto

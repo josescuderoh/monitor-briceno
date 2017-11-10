@@ -24,7 +24,7 @@ class UserProfileForm(UserCreationForm):
     class Meta:
         model = UserProfile
         fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name',
-                  'position', 'phone', 'organization', 'address')
+                  'position', 'phone', 'organization', 'address', 'role')
 
 
 class UserProfileFormUpdate(forms.ModelForm):

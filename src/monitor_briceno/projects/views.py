@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -10,6 +10,8 @@ from entities.models import UserProfile
 from collections import defaultdict, Counter
 from django.core.exceptions import PermissionDenied
 from datetime import date
+from rolepermissions.decorators import has_permission
+from rolepermissions.mixins import HasPermissionsMixin
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
 
@@ -43,33 +45,44 @@ class ProjectsView(LastAccessMixin, generic.ListView):
 
     def get_queryset(self):
         # Check if user is authenticated
-        if not self.request.user.is_authenticated:
-            raise Http404
-        else:
-            if self.request.user.is_superuser:
-                projects_pk = [project.pk for project in Project.objects.filter().order_by('start_date')]
+        if has_permission(self.request.user, 'view_projects'):
+            if has_permission(self.request.user, 'view_all_projects'):
+                projects_pk = [project.pk for project in Project.objects.filter().order_by('added')]
                 for project_pk in projects_pk:
                     temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk).order_by()]
                     if set(temp_tasks) == set(['Terminada']) and not Project.objects.get(id=project_pk).closed:
                         updated = Project.objects.get(id=project_pk)
                         updated.closed = True
                         updated.save()
-                return Project.objects.all()
+                    elif set(temp_tasks) != set(['Terminada']) and Project.objects.get(id=project_pk).closed:
+                        updated = Project.objects.get(id=project_pk)
+                        updated.closed = False
+                        updated.save()
+                return Project.objects.all().order_by('start_date')
             else:
                 projects_pk = [project.pk for project in Project.objects.filter(created_by=self.request.user).order_by('added')]
                 for project_pk in projects_pk:
                     temp_tasks = [task.completion for task in ProjectTask.objects.filter(project=project_pk)]
-                    if set(temp_tasks) == set(['TE']) and not Project.objects.get(id=project_pk).closed:
+                    if set(temp_tasks) == set(['Terminada']) and not Project.objects.get(id=project_pk).closed:
                         updated = Project.objects.get(id=project_pk)
                         updated.closed = True
                         updated.save()
-                return Project.objects.filter(created_by=self.request.user)
+                    elif set(temp_tasks) != set(['Terminada']) and Project.objects.get(id=project_pk).closed:
+                        updated = Project.objects.get(id=project_pk)
+                        updated.closed = False
+                return Project.objects.filter(created_by=self.request.user).order_by('start_date')
 
 
 class DetailView(generic.DetailView):
     """Detail view of projects."""
     model = Project
     template_name = 'projects/detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not (has_permission(request.user, 'view_all_projects') or (self.object.created_by == request.user)):
+            raise PermissionError
+        return super(DetailView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
@@ -92,28 +105,25 @@ class DetailView(generic.DetailView):
         return context
 
 
-class ProjectCreate(generic.CreateView):
+class ProjectCreate(HasPermissionsMixin, generic.CreateView):
     """View used to create a new projects"""
     # Assign data
     model = Project
     form_class = CreateProjectForm
     success_url = reverse_lazy('projects:projects-list')
+    required_permission = 'create_projects'
 
     def get_context_data(self, **kwargs):
-        # Check if user is authenticated
-        if not self.request.user.is_authenticated:
-            raise Http404
+        # Assign values
+        context = super(ProjectCreate, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['task_formset'] = TaskFormSet(self.request.POST,
+                                                  instance=self.object,
+                                                  prefix='tasks')
+            context['user'] = self.request.user
         else:
-            # Assign values
-            context = super(ProjectCreate, self).get_context_data(**kwargs)
-            if self.request.POST:
-                context['task_formset'] = TaskFormSet(self.request.POST,
-                                                      instance=self.object,
-                                                      prefix='tasks')
-                context['user'] = self.request.user
-            else:
-                context['task_formset'] = TaskFormSet(prefix='tasks')
-            return context
+            context['task_formset'] = TaskFormSet(prefix='tasks')
+        return context
 
     def form_valid(self, form):
         # Get context data
@@ -142,7 +152,7 @@ class ProjectUpdate(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         user = UserProfile.objects.get(pk=self.object.created_by.pk)
-        if (self.request.user.is_authenticated() and self.request.user.id == user.id) or self.request.user.is_superuser:
+        if (self.request.user.id == user.id) or has_permission(self.request.user, 'edit_all_projects'):
             self.object = self.get_object()
             context = super(ProjectUpdate, self).get_context_data(**kwargs)
             if self.request.POST:
@@ -172,15 +182,19 @@ class ProjectAddImage(generic.UpdateView):
     template_name = 'projects/add_images.html'
 
     def get_context_data(self, **kwargs):
-        self.object = self.get_object()
-        context = super(ProjectAddImage, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['image_formset'] = ImageFormSetUpdate(self.request.POST,
-                                                          self.request.FILES,
-                                                          instance=self.object)
+        user = UserProfile.objects.get(pk=self.object.created_by.pk)
+        if (self.request.user.id == user.id) or has_permission(self.request.user, 'edit_all_projects'):
+            self.object = self.get_object()
+            context = super(ProjectAddImage, self).get_context_data(**kwargs)
+            if self.request.POST:
+                context['image_formset'] = ImageFormSetUpdate(self.request.POST,
+                                                              self.request.FILES,
+                                                              instance=self.object)
+            else:
+                context['image_formset'] = ImageFormSetUpdate()
+            return context
         else:
-            context['image_formset'] = ImageFormSetUpdate()
-        return context
+            raise PermissionDenied
 
     def form_valid(self, form):
         context = self.get_context_data()
