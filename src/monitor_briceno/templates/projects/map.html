@@ -137,10 +137,10 @@ function out_layers(map,options){
                     style: function(feature){
                         var projs = feature.num_proj;
                         //Assign colors
-                        if ( projs == max_num_proj ) fillColor = "#006837";
-                        else if ( projs > Math.round(0.66*max_num_proj) ) fillColor = "#31a354";
-                        else if ( projs > Math.round(0.33*max_num_proj) ) fillColor = "#ffffcc";
-                        else if ( projs > 0 ) fillColor = "#ffffcc";
+                        if ( projs == max_num_proj ) fillColor = "#F6BDB6";
+                        else if ( projs > Math.round(0.66*max_num_proj) ) fillColor = "#F40303";
+                        else if ( projs > Math.round(0.33*max_num_proj) ) fillColor = "#F40D0E";
+                        else if ( projs > 0 ) fillColor = "#F64141";
                         else fillColor = "#fff";  // no data
 
                         return { color: "#003300", weight: 1.5, fillColor: fillColor, fillOpacity:.5 };
