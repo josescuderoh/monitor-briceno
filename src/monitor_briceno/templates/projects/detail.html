@@ -3,8 +3,26 @@
 {% load static %}
 {% block extrahead %}
 
+{% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
 
-<style>
+<script type="text/javascript" src="{% static 'src/leaflet.ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'src/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
+
+<style type="text/css">
+
+
+body{
+    overflow: hidden;
+}
+
+.leaflet-container {
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    border: 1px solid #950000;
+}
 
 .items-list {
     list-style-type: none;
@@ -52,10 +70,89 @@ div.griditem
     padding-bottom: 10px;
 }
 
+#loading {
+    display: block;
+    position: absolute;
+    z-index: 51;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    background-image: url("/static/images/ajax-loader2.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*#details{
+    display: none;
+}*/
+
 </style>
 
 <script type="text/javascript" src="{% static 'src/fusioncharts/js/fusioncharts.js' %}"></script>
 <script type="text/javascript" src="{% static 'src/fusioncharts/js/themes/fusioncharts.theme.fint.js' %}"></script>
+
+<script type="text/javascript">
+
+function out_layers(map,options){
+    // Base layers
+    var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}{y}{x}.png", {
+        maxZoom: 17,
+    });
+
+    var included;
+    var veredas;
+
+    $('#loading').show();
+    function data_ajax(){
+        return $.ajax({
+                        type: "GET",
+                        url: "/projects/veredas_data/",
+                        dataType: 'json',
+                        success: function (response) {
+
+                            veredas = L.geoJSON(response, {
+                                onEachFeature: function(feature, layer){
+                                    //Append required text
+                                    var popupMsj = 'Vereda: ' + feature.properties.nombre_ver.toString();
+                                    layer.bindTooltip(popupMsj);
+                                },
+                                style: function(feature){
+                                    return {color: "#950000", weight: 2, fillColor:"#fff", fillOpacity:0.3 };
+                                },
+                            });
+                            veredas.addTo(map);
+                        }
+                });
+    };
+
+    $.ajax({
+            type: "GET",
+            url: "/projects/{{project.pk}}/map_data/",
+            dataType: 'json',
+            success: function (response) {
+
+                included = L.geoJSON(response, {
+                    onEachFeature: function(feature, layer){
+                        //Append required text
+                        var popupMsj = 'Vereda: ' + feature.properties.nombre_ver.toString();
+                        layer.bindTooltip(popupMsj);
+                    },
+                    style: function(feature){
+                        return {color: "#950000", weight: 2, fillColor:"#F64141", fillOpacity:1 };
+                    },
+                });
+                included.addTo(map);
+            }
+    });
+
+    $.when(data_ajax()).done(function() {
+        $("body").css("overflow", "scroll");
+        $('#loading').hide();
+    });
+
+};
+
+</script>
 
 
 <script>
@@ -117,6 +214,9 @@ FusionCharts.ready(function () {
 {% block body %}
 
 <!-- Page Content -->
+
+<div id="loading"></div>
+
 <div class="main-container">
 <div class="container" id="page">
 
@@ -219,6 +319,14 @@ FusionCharts.ready(function () {
                 <h4 style="padding-bottom: 15px;">No hay imágenes para mostrar</h4>
         {% endif %}
             </div>
+        </div>
+    </div>
+
+    <div class="row section">
+        <div class="container col-lg-12 map-container">
+        <h4><strong>Veredas de influencia</strong></h4>
+        <br>
+            {% leaflet_map "gis" callback="window.out_layers" %}
         </div>
     </div>
 

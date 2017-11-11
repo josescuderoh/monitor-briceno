@@ -15,7 +15,7 @@ from rolepermissions.mixins import HasPermissionsMixin
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
 
-from .geojson_serializer import Serializer
+from .geojson_serializer import Serializer, ProjectSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -206,6 +206,14 @@ class ProjectAddImage(generic.UpdateView):
             return HttpResponseRedirect(reverse('projects:project-update', kwargs={'pk': self.object.pk}))
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+def ProjectMap(request, pk):
+    """This method calls the geojson serializer created to build the data structure for the project's map"""
+    geojson_serializer = ProjectSerializer()
+    geojson_serializer.serialize(Veredas.objects.filter(project__pk=pk))
+    data = geojson_serializer.getvalue()
+    return HttpResponse(data, content_type='json')
 
 
 def MapDataView(request):

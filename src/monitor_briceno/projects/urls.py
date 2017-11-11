@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^$', views.ProjectsView.as_view(), name='projects-list'),
     # # Detail of projects url
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    # API view for Detail
+    url(r'^(?P<pk>[0-9]+)/map_data/$', views.ProjectMap, name='map-detail'),
     # Add project url
     url(r'^add/$', views.ProjectCreate.as_view(), name='project-add'),
     # Update project url
