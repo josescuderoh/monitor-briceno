@@ -18,4 +18,6 @@ urlpatterns = [
                                         'authentication_form': LoginForm}, name='login'),
     # Logout url
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    # List of Users
+    url(r'^users/$', views.UsersView.as_view(), name='users'),
 ]

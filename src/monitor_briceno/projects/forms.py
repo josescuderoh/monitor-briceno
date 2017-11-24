@@ -33,10 +33,14 @@ class CreateTaskForm(ModelForm):
     class Meta:
         model = ProjectTask
         fields = '__all__'
+        widgets = {
+            'task': forms.Textarea(attrs={'rows': 2}),
+            'comments': forms.Textarea(attrs={'rows': 3}),
+        }
 
 TaskFormSet = inlineformset_factory(Project, ProjectTask,
                                     extra=1, fields='__all__',
-                                    max_num=3, can_delete=False,
+                                    max_num=10, can_delete=False,
                                     form=CreateTaskForm)
 
 
@@ -68,14 +72,19 @@ class UpdateTaskForm(ModelForm):
     class Meta:
         model = ProjectTask
         fields = '__all__'
+        widgets = {
+            'task': forms.Textarea(attrs={'rows': 2}),
+            'comments': forms.Textarea(attrs={'rows': 3}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(UpdateTaskForm, self).__init__(*args, **kwargs)
         self.fields['task'].widget.attrs['readonly'] = True
+        self.fields['task_type'].widget.attrs['readonly'] = True
 
 TaskFormSetUpdate = inlineformset_factory(Project, ProjectTask,
                                           extra=0, fields='__all__',
-                                          can_delete=False, max_num=3,
+                                          can_delete=False, max_num=10,
                                           form=UpdateTaskForm)
 
 

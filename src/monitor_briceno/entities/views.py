@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
@@ -14,6 +15,7 @@ from .forms import UserProfileForm, UserProfileFormUpdate
 from .models import UserProfile
 from .tasks import send_verification_email
 from .tokens import account_activation_token
+from rolepermissions.mixins import HasPermissionsMixin
 
 
 @has_permission_decorator('create_users')
@@ -94,3 +96,13 @@ def edit_user(request, pk):
         })
     else:
         raise PermissionDenied
+
+
+class UsersView(HasPermissionsMixin, generic.ListView):
+    """List view of all users and users management console"""
+    template_name = 'entities/users.html'
+    context_object_name = 'all_users'
+    required_permission = 'create_users'
+
+    def get_queryset(self):
+        return UserProfile.objects.all().filter(groups__name='entidad').order_by('organization')

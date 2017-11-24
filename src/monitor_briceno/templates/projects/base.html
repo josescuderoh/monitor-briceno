@@ -63,8 +63,8 @@
                 </li>
                 {% if user|can:'create_users' %}
                 <li class="{% if request.resolver_match.url_name == 'register' %}active{% else %}#{% endif %}">
-                    <a href="{% url 'entities:register' %}">
-                        <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
+                    <a href="{% url 'entities:users' %}">
+                        <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Gestionar Usuarios
                     </a>
                 </li>
                 {% endif %}

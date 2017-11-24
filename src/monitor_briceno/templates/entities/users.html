@@ -1,0 +1,101 @@
+{% extends 'projects/base.html' %}
+{% block title %}Usuarios{% endblock %}
+
+{% block extrahead %}
+
+<style>
+#customers {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 20px;
+}
+
+#customers td, #customers th {
+    border: 1px solid gray;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    align-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgba(148, 0, 0, 0.2);
+    color: black;
+}
+
+.button-go {
+    background-color: #940000;
+    border: white;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+</style>
+
+{% endblock %}
+
+
+{% load i18n %}
+{% block body %}
+
+<div class="main-container">
+    <!-- Projects -->
+    <div class="col-sm-12" align="center" id="projects_title">
+        <h2>Listado de Organizaciones </h2>
+    </div>
+    {% if all_users %}
+    <div class="list-group">
+            <div class="col-sm-12 col-md-12" style="overflow-x:auto;">
+                <table id="customers">
+                <tr>
+                    <th>Organización</th>
+                    <th>Responsable</th>
+                    <th>E-mail</th>
+                    <th>Teléfono</th>
+                    <th>Último ingreso</th>
+                    <th>Conteo de ingresos</th>
+                </tr>
+
+                {% for user in all_users %}
+                  <tr>
+                      <td>{{user.organization}}</td>
+                      <td>{{user.first_name}} {{user.last_name}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.phone}}</td>
+                      <td>{{user.last_activity}}</td>
+                      <td>{{user.login_count}}</td>
+                  </tr>
+                {% endfor %}
+                </table>
+            </div>
+    </div>
+    {% else %}
+    <div class="container-fluid">
+        <!-- There are none -->
+        <div class="row">
+            <div class="col-sm-12" align="center">
+                <h4>No hay ninguna organización registrada.</h4>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="col-sm-12" align="center">
+            <a href="{% url 'entities:register' %}" class="button-go">
+                <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
+            </a>
+    </div>
+</div>
+
+{% endblock %}

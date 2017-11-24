@@ -119,14 +119,18 @@ class ProjectTask(models.Model):
     """Tasks or activities defined inside each project"""
     # ID del proyecto
     project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
+    # Type of task
+    TYPES = (('Actividad', 'Actividad'), ('Proceso', 'Proceso'), ('Línea o programa', 'Línea o programa'))
+    task_type = models.CharField(verbose_name="Tipo de producto",
+                                 choices=TYPES, default='Actividad', max_length=20)
     # Tarea
-    task = models.CharField(verbose_name="Actividad", max_length=50)
+    task = models.CharField(verbose_name="Actividad", max_length=255)
     # Nivel de ejecución
     LEVELS = (('Por iniciar', 'Por iniciar'), ('En curso', 'En curso'), ('Terminada', 'Terminada'))
     completion = models.CharField(verbose_name="Estado de ejecución",
                                   choices=LEVELS, default=False, max_length=20)
     # Observaciones
-    comments = models.CharField(verbose_name="Observaciones", max_length=100, blank=True, null=True)
+    comments = models.CharField(verbose_name="Observaciones", max_length=255, blank=True, null=True)
     # Control de cambios
     added = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
