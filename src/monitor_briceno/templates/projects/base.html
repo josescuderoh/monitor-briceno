@@ -62,7 +62,7 @@
                     </p>
                 </li>
                 {% if user|can:'create_users' %}
-                <li class="{% if request.resolver_match.url_name == 'register' %}active{% else %}#{% endif %}">
+                <li class="{% if request.resolver_match.url_name == 'users' %}active{% else %}#{% endif %}">
                     <a href="{% url 'entities:users' %}">
                         <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Gestionar Usuarios
                     </a>

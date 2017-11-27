@@ -14,7 +14,7 @@ from rolepermissions.decorators import has_permission
 from rolepermissions.mixins import HasPermissionsMixin
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
-
+import xlwt
 from .geojson_serializer import Serializer, ProjectSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -302,3 +302,42 @@ class ReportData(APIView):
 class ReportView(generic.TemplateView):
     """Template view for report view"""
     template_name = "projects/report.html"
+
+
+def export_users_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="proyectos.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Proyectos')
+
+    # Sheet header, first row
+    row_num = 0
+
+    columns = [
+        u"Entidad",
+        u"Proyecto",
+        u"Objetivo",
+        u"Presupuesto",
+        u"Interlocutor",
+        u"Cerrado",
+    ]
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+    font_style.alignment.wrap = 0
+
+    rows = Project.objects.all().values_list('created_by__organization', 'name', 'main_goal', 'budget',
+                                             'representative', 'closed')
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response

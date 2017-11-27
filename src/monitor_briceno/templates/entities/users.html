@@ -28,19 +28,6 @@
     color: black;
 }
 
-.button-go {
-    background-color: #940000;
-    border: white;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
 
 </style>
 
@@ -81,6 +68,11 @@
                 </table>
             </div>
     </div>
+    <div class="col-sm-12" align="center">
+            <a href="{% url 'entities:register' %}" class="button-go">
+                <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
+            </a>
+    </div>
     {% else %}
     <div class="container-fluid">
         <!-- There are none -->
@@ -91,11 +83,6 @@
         </div>
     </div>
     {% endif %}
-    <div class="col-sm-12" align="center">
-            <a href="{% url 'entities:register' %}" class="button-go">
-                <span class="fa fa-users" aria-hidden="true"></span>&nbsp; Agregar Usuario
-            </a>
-    </div>
 </div>
 
 {% endblock %}

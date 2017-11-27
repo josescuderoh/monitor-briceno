@@ -69,6 +69,11 @@
             {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
         {% endfor %}
     </div>
+    <div class="col-sm-12" align="center">
+            <a href="{% url 'projects:export_users_xls' %}" class="button-go">
+                <span class="fa fa-file-excel-o" aria-hidden="true"></span>&nbsp; Descargar Excel
+            </a>
+    </div>
     {% else %}
     <div class="container-fluid" id="no_projects">
         <!-- There are none -->

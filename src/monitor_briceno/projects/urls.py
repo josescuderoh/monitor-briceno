@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^veredas_data/$', views.MapDataView, name='veredas'),
     # Projects url
     url(r'^$', views.ProjectsView.as_view(), name='projects-list'),
+    # Download projects
+    url(r'^export/xls/$', views.export_users_xls, name='export_users_xls'),
     # # Detail of projects url
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     # API view for Detail
