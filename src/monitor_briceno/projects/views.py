@@ -12,6 +12,7 @@ from django.core.exceptions import PermissionDenied
 from datetime import date
 from rolepermissions.decorators import has_permission
 from rolepermissions.mixins import HasPermissionsMixin
+from rolepermissions.decorators import has_permission_decorator
 from .models import Project, ProjectTask, Veredas
 from .forms import CreateProjectForm, UpdateProjectForm, TaskFormSet, TaskFormSetUpdate, ImageFormSetUpdate
 import xlwt
@@ -304,6 +305,7 @@ class ReportView(generic.TemplateView):
     template_name = "projects/report.html"
 
 
+@has_permission_decorator('view_all_projects')
 def export_users_xls(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="proyectos.xls"'

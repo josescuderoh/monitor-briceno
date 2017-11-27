@@ -26,7 +26,7 @@
     {% if all_projects %}
     <div class="list-group">
         {% for project in all_projects %}
-            <div class="col-sm-6 col-md-4" id="project_each">
+            <div class="col-sm-6 col-lg-4" id="project_each">
                 <div class="thumbnail list-group-item {% if project.closed %}disabled{% endif %}">
                     <div class="caption">
                         <div class="row">
@@ -69,11 +69,13 @@
             {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
         {% endfor %}
     </div>
+    {% if user|can:'view_all_projects' %}
     <div class="col-sm-12" align="center">
             <a href="{% url 'projects:export_users_xls' %}" class="button-go">
                 <span class="fa fa-file-excel-o" aria-hidden="true"></span>&nbsp; Descargar Excel
             </a>
     </div>
+    {% endif %}
     {% else %}
     <div class="container-fluid" id="no_projects">
         <!-- There are none -->
