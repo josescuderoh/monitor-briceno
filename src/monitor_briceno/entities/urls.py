@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     # List of Users
     url(r'^users/$', views.UsersView.as_view(), name='users'),
+    # Delete user
+    url(r'^delete/(?P<pk>[0-9]+)/$', views.DeleteUser.as_view(), name='delete-user'),
 ]

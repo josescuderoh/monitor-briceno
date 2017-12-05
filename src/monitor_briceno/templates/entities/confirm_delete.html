@@ -1,0 +1,16 @@
+{% extends 'projects/base.html' %}
+{% block title %}Eliminar Usuario{% endblock %}
+
+
+{% block body %}
+<div class="main-container">
+<div class="container form-container">
+    <form method="post">{% csrf_token %}
+        <div class="col-sm-12" align="center" style="padding-bottom: 15px; padding-top: 15px;">
+            <h4>¿Seguro que desea eliminar toda la información asociada al usuario <strong>{{ object.username }}</strong>?</h4>
+            <button type="submit" class="btn btn-success button-background">Eliminar</button>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock %}

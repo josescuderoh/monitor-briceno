@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse_lazy
 from rolepermissions.roles import assign_role
 from rolepermissions.decorators import has_permission_decorator
 from .forms import UserProfileForm, UserProfileFormUpdate
@@ -106,3 +107,10 @@ class UsersView(HasPermissionsMixin, generic.ListView):
 
     def get_queryset(self):
         return UserProfile.objects.all().filter(groups__name='entidad').order_by('organization')
+
+
+class DeleteUser(generic.DeleteView):
+    model = UserProfile
+    required_permission = 'delete_users'
+    success_url = reverse_lazy('entities:users')
+    template_name = 'entities/confirm_delete.html'

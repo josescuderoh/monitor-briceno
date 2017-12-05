@@ -4,6 +4,7 @@ from rolepermissions.roles import AbstractUserRole
 class Administrador(AbstractUserRole):
     available_permissions = {
         'create_users': True,
+        'delete_users': True,
         'view_all_projects': True,
         'edit_all_projects': True,
         'view_projects': True,

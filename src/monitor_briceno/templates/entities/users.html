@@ -53,6 +53,7 @@
                     <th>Teléfono</th>
                     <th>Último ingreso</th>
                     <th>Conteo de ingresos</th>
+                    <th>Acciones</th>
                 </tr>
 
                 {% for user in all_users %}
@@ -63,6 +64,7 @@
                       <td>{{user.phone}}</td>
                       <td>{{user.last_activity}}</td>
                       <td>{{user.login_count}}</td>
+                      <td><a class="" href="{% url 'entities:delete-user' user.id %}">Eliminar</a></td>
                   </tr>
                 {% endfor %}
                 </table>
