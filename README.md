@@ -2,7 +2,7 @@
 
 Este repositorio contiene el código fuente de la plataforma de integración de la cooperación el municipio de Briceño, la cual se puede encontrar en www.briceno-antioquia.gov.co
 
-##Notas de desarrollo
+## Notas de desarrollo
 
 ### Ejecución del worker redis para envío de confirmación de correos.
 
