@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
     v.cpus = 4
   end
 
-  config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 9000, host: 9000
 
 
   config.vm.provision "shell", inline: <<-SHELL

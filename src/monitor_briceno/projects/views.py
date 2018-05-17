@@ -247,7 +247,8 @@ class ReportData(APIView):
         # Process data
         d = defaultdict(int)
         for (org, monto) in projects_data:
-            d[(org)] += monto
+            if monto and monto > 0:
+                d[(org)] += monto
         budget_per_organization = {k: v for k, v in d.items()}
 
         # Process status data
