@@ -14,7 +14,7 @@ django-leaflet==0.22.0
 django-role-permissions==2.1.0
 django-simple-email-confirmation==0.22
 django-storages==1.6.5
-djangorestframework==3.6.3
+djangorestframework==3.11.2
 gunicorn==19.7.1
 kombu==3.0.37
 numpy
